@@ -9,14 +9,15 @@ h1 {
   font-weight: 700;
   font-size: 4.9vw;
   letter-spacing: -0.2vw;
+  margin-left: -0.5%;
 }
 
 h2 {
-  font-size: 1.8vw;
+  font-size: 1.5vw;
 }
 
 h3 {
-  font-size: 2.5vw;
+  font-size: 2vw;
   /*line-height: 3.1vw;*/
   font-weight: 600;
   /*display: inline;*/
@@ -38,6 +39,8 @@ h3 {
   width: 80%;
   /*max-width: 900px;*/
   margin: 0 auto;
+  padding-bottom: 1%;
+  border-bottom: 10px solid #4AC5B1;
 }
 
 @media only screen and (max-width: 600px) {
@@ -71,7 +74,18 @@ h3 {
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
-  margin-bottom: 3vw;
+  margin-bottom: 8vw;
+}
+.header p {
+  font-size: 1.1vw;
+  line-height: 1.4vw;
+  margin-top: 2%;
+}
+@media only screen and (max-width: 600px) {
+  .header p {
+    font-size: 2vw;
+    line-height: 2.6vw;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -94,8 +108,12 @@ h3 {
   width: 37%;
   background: #4AC5B1;
   border-bottom: 1px solid #4AC5B1;
-  height: 100%;
-  padding: 1.3% 0 1.3% 2%;
+  padding: 2% 0 0 2%;
+}
+@media only screen and (max-width: 600px) {
+  .info-flex {
+    padding: 0 0 0 2%;
+  }
 }
 
 .info-flex p {
@@ -116,7 +134,6 @@ h3 {
 }
 .entry {
   margin-bottom: 6%;
-  padding: 0 0 0 2%;
 }
 
 .entry-head {
@@ -144,7 +161,7 @@ h3 {
 }
 
 .work-item-co {
-  font-size: 1.6vw;
+  font-size: 1.4vw;
   font-weight: 500;
 }
 
@@ -162,7 +179,7 @@ h3 {
 .tool-item {
   width: 20%;
   margin-bottom: 2vw;
-  font-size: 1.6vw;
+  font-size: 1.4vw;
   font-weight: 500;
 }
 @media only screen and (max-width: 600px) {
