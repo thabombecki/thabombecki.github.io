@@ -1,0 +1,95 @@
+@import url("foundation.css");
+@import url("navigations.css");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i");
+html, body {
+  min-height: 500px; }
+
+h1 {
+  font-size: 3.7vw;
+  line-height: 3.2vw;
+  color: #ffffff;
+  font-weight: 700; }
+
+h3 {
+  font-size: 1.5vw;
+  line-height: 1.5vw;
+  color: #f9be1d;
+  font-weight: 800; }
+
+p {
+  font-size: 1.5vw;
+  line-height: 1.5vw;
+  color: #ffffff; }
+
+.orbit {
+  height: 100% !important;
+  background: url(../img/panel-one/bg-wood.jpg);
+  background-size: cover;
+  background-position: center; }
+  .orbit .orbit-container {
+    min-height: 100% !important;
+    position: relative; }
+    .orbit .orbit-container .orbit-slide {
+      min-height: 100% !important; }
+
+.slide-one .ring {
+  width: 37%;
+  left: 5%;
+  position: absolute;
+  z-index: 99; }
+.slide-one .logo {
+  position: absolute;
+  left: 11%;
+  top: 5%;
+  z-index: 100; }
+  .slide-one .logo button {
+    color: #000000;
+    background: #f9be1d;
+    font-size: 1vw;
+    font-weight: 800;
+    padding: 4% 15%;
+    margin-top: 4%; }
+.slide-one .content-one {
+  width: 30%;
+  position: absolute;
+  z-index: 98;
+  bottom: 34%;
+  right: 27%; }
+.slide-one .farm-fresh {
+  width: 10%;
+  top: 4%;
+  right: 2%;
+  position: absolute;
+  z-index: 101; }
+.slide-one .tango {
+  width: 35%;
+  position: absolute;
+  z-index: 97;
+  bottom: 46%;
+  right: 22%; }
+.slide-one .tango-logo {
+  width: 40%;
+  position: absolute;
+  z-index: 97;
+  bottom: 10%;
+  right: 17%; }
+.slide-one .bee-friendly {
+  position: absolute;
+  z-index: 104;
+  width: 7%;
+  left: 33%;
+  bottom: 20%; }
+.slide-one .fruit-one {
+  width: 30%;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  z-index: 1; }
+.slide-one .fruit-two {
+  width: 25%;
+  top: 0;
+  right: 0;
+  position: absolute;
+  z-index: 2; }
+
+/*# sourceMappingURL=app.css.map */

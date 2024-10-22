@@ -1,0 +1,522 @@
+@import url("foundation.css");
+@import url("navigations.css");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+
+$yellow: #f9be1d;
+
+html, body {
+   // height: 100%;
+   // margin: 0; 
+   // min-height: 500px;
+   margin: 0;
+}
+
+h1 {
+   // font-size: 2.7vw;
+   // line-height: 2.2vw;
+   font-size: 6vmin;
+   line-height:  6vmin;
+   color: #ffffff;
+   font-weight: 700;
+   @media screen and (max-width: 39.9375em) {
+      font-size: 5vh;
+      line-height: 5vh;
+   }
+}
+
+h2 {
+   // font-size: 1.8vw;
+   // line-height: 1.8vw;
+   font-size: 3.5vmin;
+   line-height: 3.5vmin;
+   color: #ffffff;
+   font-weight: 800;
+   @media screen and (max-width: 39.9375em) {
+      font-size: 3.3vh;
+      line-height: 3.3vh;
+   }
+}
+
+h3 {
+   // font-size: 1.2vw;
+   // line-height: 1.2vw;
+   font-size: 2.3vmin;
+   line-height: 2.5vmin;
+   color: $yellow;
+   font-weight: 800;
+   @media screen and (max-width: 39.9375em) {
+      font-size: 2.4vh;
+      line-height: 2.4vh;
+   }
+}
+
+p {
+   // font-size: 1.2vw;
+   // line-height: 1.2vw;
+   font-size: 2.2vmin;
+   line-height: 2.2vmin;
+   color: #ffffff;
+   margin: 0;
+   @media screen and (max-width: 39.9375em) {
+      font-size: 2.7vh;
+      line-height: 2.7vh;
+   }
+}
+
+button {
+   color: #000000;
+   background: $yellow;
+   // font-size: 1vw;
+   font-size: 2vmin;
+   font-weight: 800;
+   padding: 4% 10%;
+   margin-top: 4%;
+   @media screen and (max-width: 39.9375em) {
+      font-size: 2vh;
+   }
+      transition: all 0.4s ease 0s;
+      box-shadow: inset 0 0 0 0 #000000;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: inset  0 50px 0 0  #000000;
+        color: $yellow;
+      }
+}
+
+.clear {
+   clear: both;
+}
+
+.reveal {
+   background-color: #000000;
+   text-align: center;
+   height: 50%;
+   min-height: 47%;
+   // height: 45vh;
+   // min-height: 45vh;
+   border-radius: 10px;
+   width: 70%;
+   left: 15%;
+
+   &:focus {
+      outline: none;
+   }
+
+   img {
+      margin-top: 10%
+   }
+
+   .lead {
+      font-size: 110%;
+      line-height: 1.1;
+   }
+
+   .close-button {
+      position: relative;
+      color: #000000;
+      font-size: 1rem;
+      right: 0;
+   }
+}
+
+.reveal-overlay {
+   @media screen and (min-width: 40em) {
+      display: none!important;
+      background-color: transparent;
+   }
+}
+
+.scroll {
+   white-space: nowrap;
+   position: relative;
+   overflow: hidden;
+   width: 100%;
+   @media screen and (min-width: 40em) {
+      overflow: hidden;
+      height: 84vh;
+   }
+
+   ul {
+      // height: 100vh;
+      position: relative;
+      display: block;
+      width: auto;
+      white-space: nowrap;
+      overflow-x: scroll;
+      margin: 0;
+      clear: both;
+
+      li {
+         position: relative;
+         white-space: nowrap;
+         overflow: hidden;
+         margin-left: -5px;
+         display: inline-flex;
+         @media screen and (min-width: 40em) {
+            display: inline-flex;
+            height: 84vh;
+         }
+         .bg {
+            // height: 84vh;
+            // width: 100%;
+            @media screen and (min-width: 40em) {
+               height: 84vh;
+            }
+
+            @media screen and (max-width: 39.9375em) {
+               max-width: inherit;
+               height: 80vh;
+            }
+         }
+      }
+   }
+
+   .share {
+      position: absolute;
+   }
+
+   .one {
+      .logo {
+         position: absolute;
+         left: 11%;
+         top: 5%;
+         z-index: 100;
+         @media screen and (max-width: 39.9375em) {
+            left: 9%;
+            top: 2%;
+         }
+
+      }
+      .meet-tango {
+         width: 46%;
+         position: absolute;
+         z-index: 98;
+         bottom: 18%;
+         right: 14%;
+         white-space: normal;
+         @media screen and (max-width: 39.9375em) {
+            right: 27%;
+         }
+      }
+
+      .ring {
+         top: 0;
+         left: 2%;
+         width: 60%;
+         @media screen and (max-width: 39.9375em) {
+            width: 58%;
+         }
+      }
+
+      .farm-fresh {
+         top: 2%;
+         right: 2%;
+         width: 15%;
+      }
+      .bee-friendly{
+         bottom: 24%;
+         left: 23%;
+         width: 11%;
+         @media screen and (max-width: 39.9375em) {
+            bottom: 21%;
+            left: 10%;
+            width: 13%;
+         }
+      }
+      .tango {
+         bottom: 27%;
+         left: 39%;
+         width: 42%;
+         @media screen and (max-width: 39.9375em) {
+            bottom: 30%;
+            left: 27%;
+         }
+
+      }
+      .tango-logo {
+         bottom: 2%;
+         left: 40%;
+         width: 42%;
+         @media screen and (max-width: 39.9375em) {
+            left: 27%;
+         }
+      }
+      .mouse {
+         bottom: 3%;
+         left: 4%;
+         width: 15%;
+         animation: mouse 1s ease 5;
+
+         @media screen and (max-width: 39.9375em) {
+            left: 1%;
+            width: 12%;
+         }
+      }
+   }
+
+   .two {
+      .vitamin {
+         top: 6%;
+         left: 2%;
+      }
+      .soup {
+         border: 2px solid $yellow;
+         top: 28%;
+         left: 20%;
+         height: 65%;
+         padding: 2%;
+
+         button {
+            position: absolute;
+            bottom: -5%;
+            margin-left: -1%;
+            z-index: 1000;
+            // width: 100%;
+         }
+         @media screen and (max-width: 39.9375em) {
+            left: 10%;
+         }
+      }
+      .herbs {
+         width: 36%;
+         bottom: 12%;
+         right: 6%;
+         white-space: normal;
+         img {
+            width: 60%;
+            margin-left: -10%;
+         }
+      }
+      .soup-img {
+          width: 39%;
+          top: 41%;
+          left: 13%;  
+          @media screen and (max-width: 39.9375em) {
+            left: 2%;
+          }
+      }
+      .chillies {
+         width: 31%;
+         top: 17%;
+         right: 3%;
+         @media screen and (max-width: 39.9375em) {
+            width: 36%;
+         }
+      }
+   }
+   .three {      
+      .potatoes {
+         width: 36%;
+         top: 28%;
+         left: 11%;
+         white-space: normal;
+         img {
+            width: 80%;
+            margin-left: -10%;
+         }
+         b {
+            color: $yellow;
+         }
+      }
+      .pesto {
+         border: 2px solid $yellow;
+         top: 11%;
+         right: 3%;
+         height: 80%;
+         padding: 2%;
+
+         button {
+            position: absolute;
+            bottom: -5%;
+            margin-left: 9%;
+         }
+      }
+      .serve-with {
+         width: 27%;
+         top: 9%;
+         right: 37%;
+      }
+      .carisma {
+         width: 16%;
+         bottom: 37%;
+         left: 30%;
+      }
+      .price-tag {
+         width: 16%;
+         bottom: 4%;
+         left: 42%;
+      }
+      .low-gi {
+         width: 16%;
+         bottom: 0%;
+         left: 0%;
+      }
+      .dyk {
+         width: 21%;
+         top: 5%;
+         left: 0%;
+      }
+      .chicken {
+         width: 44%;
+         top: 24%;
+         right: 0;
+      }
+   }
+   .four {
+      .roast {
+         border: 2px solid $yellow;
+         top: 3%;
+         left: 15%;
+         height: 52%;
+         padding: 2%;
+
+         button {
+            position: absolute;
+            bottom: -5%;
+            margin-left: 2%;
+         }
+      }     
+      .strawberries {
+         width: 41%;
+         top: 17%;
+         right: 1%;
+         white-space: normal;
+         img {
+            width: 69%;
+            margin-left: -10%;
+         }
+         @media screen and (max-width: 39.9375em) {
+            top: 9%;
+         }
+      }     
+      .kale {
+         width: 34%;
+         bottom: 7%;
+         left: 28%;
+         white-space: normal;
+         img {
+            width: 69%;
+            margin-left: -10%;
+         }
+      }
+      .venison {
+         width: 45%;
+         top: 14%;
+         left: 6%;
+      }
+      .price-tag {
+         width: 13%;
+         top: 44%;
+         right: 34%;
+         @media screen and (max-width: 39.9375em) {
+            width: 17%;
+         }
+      }
+   }
+   .five {
+      .smoothie {
+         border: 2px solid $yellow;
+         bottom: 8%;
+         left: 5%;
+         height: 52%;
+         padding: 2%;
+
+         button {
+            position: absolute;
+            bottom: -5%;
+            margin-left: -1%;
+         }
+      }
+      .chicken {
+         border: 2px solid $yellow;
+         top: 2%;
+         right: 5%;
+         height: 52%;
+         padding: 2%;
+
+         button {
+            position: absolute;
+            bottom: -5%;
+            margin-left: 0;
+         }
+      }     
+      .superfood {
+         width: 34%;
+         top: 17%;
+         left: 5%;
+         white-space: normal;
+         img {
+            width: 80%;
+            margin-bottom: 2%;
+         }
+         @media screen and (max-width: 39.9375em) {
+            top: 13%;
+         }
+      }     
+      .sprouts {
+         width: 39%;
+         bottom: 12%;
+         left: 38%;
+         white-space: normal;
+         img {
+            width: 66%;
+            margin-left: -5%;
+         }
+         @media screen and (max-width: 39.9375em) {
+            bottom: 6%;
+         }
+      }
+      .what-else {
+            bottom: 3%;
+            right: 3%;
+            padding: 2% 5%;
+
+         @media screen and (max-width: 39.9375em) {
+            bottom: 0;
+            right: 0;
+            padding: 1% 2%;
+         }
+      } 
+      .avo {
+         width: 30%;
+         bottom: 13%;
+         left: 3%;
+      }
+      .stir-fry {
+         width: 34%;
+         top: 11%;
+         right: 2%;
+      }
+      .lower {
+         width: 11%;
+         top: 2%;
+         left: 34%;
+         @media screen and (max-width: 39.9375em) {
+            width: 13%;
+         }
+      }
+      .price-tag {
+         width: 16%;
+         top: 45%;
+         left: 34%;
+         @media screen and (max-width: 39.9375em) {
+            width: 17%;
+         }
+      }
+      .wok {
+         width: 10%;
+         top: 25%;
+         left: 52%;
+      }
+   }
+}
+
+@keyframes mouse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }

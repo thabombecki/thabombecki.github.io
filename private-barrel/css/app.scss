@@ -1,0 +1,472 @@
+@import url("foundation.css");
+@import url("navigations.css");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+@import url('https://fonts.googleapis.com/css?family=Taviraj:400i');
+@import url('https://fonts.googleapis.com/css?family=Anton|Vollkorn:400i');
+
+$main-font: 'Open Sans', sans-serif;
+$serif: 'Taviraj', serif;
+$serif-two: 'Vollkorn', serif;
+
+$dark-blue: #111725;
+$main-blue: #243355;
+$light-blue: #699cce;
+$font-blue: #1b2640;
+
+body {
+	background: #ffffff;
+}
+
+h1, h2, h3, h4, h5, p, ul, li {
+  // font-family: $main-font;
+  // color: #ffffff;
+}
+
+.row .row{
+  @media screen and (max-width: 39.9375em) {margin-right: 0;}
+  @media screen and (min-width: 40em) and (max-width: 63.9375em) {margin-right: 0;}
+}
+
+.no-pad {
+  padding: 0;
+}
+
+.clear {
+  clear: both;
+}
+
+.page-title {
+  background: $dark-blue;
+  text-align: center;
+  padding: 15px 0;
+  @media screen and (max-width: 39.9375em) {
+    img {
+      width: 70%;
+    }
+  }
+}
+
+.header {
+	background-image: url(../img/bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  padding: 25px 0 3% ;
+
+  p{
+    font-size: 16px;
+    color: $font-blue;
+    margin-top: 30px;
+    padding: 0 15%;
+    
+    @media screen and (max-width: 39.9375em) {
+      padding: 0;
+      font-size: 13px;
+    }
+  }
+    
+  @media screen and (min-width: 40em) and (max-width: 63.9375em) {
+    // padding-top: 304px;
+  }
+
+  // .large-12 {
+  //   @media screen and (min-width: 64em) {
+  //     padding: 0 177px;
+  //   }
+  // }
+
+  // .columns {
+  //   @media screen and (max-width: 39.9375em) {
+  //     padding: 0;
+  //   }
+  // }
+
+  // @media screen and (max-width: 39.9375em) {
+  //   background-size: 150%;
+  //   background-position: top;
+  //   padding-top: 5%;
+  //   padding-bottom: 8%;
+  // }
+}
+
+.content-title {
+  background-image: url(../img/content-title-bg.jpg);
+  background-position: center;
+  background-size: cover;
+  text-align: center;
+  padding: 15px 0 18px 0;
+
+  @media screen and (max-width: 39.9375em) {
+    img {width: 80%;}
+  }
+}
+
+.edin {
+  background-image: url(../img/content-bg.jpg);
+}
+
+.loch-content {
+  background-image: url(../img/content-bg-loch.jpg);
+}
+
+.soon-content {
+  background-image: url(../img/content-bg-soon.jpg);
+}
+
+.campbell-content {
+  background-image: url(../img/content-bg-campbell.jpg);
+}
+
+.reveal-content {
+  background-image: url(../img/content-bg-reveal.jpg);
+  text-align: center;
+  position: relative;
+
+  button {
+    color: #ffffff;
+    background: #e21d2c;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 15px 60px;
+    position: absolute;
+    bottom: 5%;
+    right: 29%;
+      @media screen and (max-width: 39.9375em) {
+        font-size: 12px;
+        padding: 10px 17px;
+        right: 2%;
+      }
+  }
+}
+
+.content {
+  
+  background-position: center;
+  background-size: cover;
+
+  .video {
+    padding: 20px 15px;
+    .responsive-embed {
+      border: 15px solid #ffffff;
+      -webkit-box-shadow: 0px 5px 10px -2px rgba(0,0,0,0.5);
+      -moz-box-shadow: 0px 5px 10px -2px rgba(0,0,0,0.5);
+      box-shadow: 0px 5px 10px -2px rgba(0,0,0,0.5);
+
+
+      @media screen and (max-width: 39.9375em) {
+        border: 5px solid #ffffff;
+      }
+
+      @media screen and (min-width: 40em) and (max-width: 63.9375em) {
+        border: 10px solid #ffffff
+      }
+    }
+
+    @media screen and (min-width: 40em) and (max-width: 63.9375em) {
+      padding: 35px 15px;
+    }
+
+    @media screen and (min-width: 64em) {
+      padding: 50px 120px;
+    }
+  }
+
+  .blurb {
+    padding-right: 20px;
+    position: relative;
+    padding-bottom: 70px;
+
+    .blurb-content {
+     background-color: $main-blue;
+     padding: 20px 25px;
+     color: #ffffff;
+
+      h2 {
+        font-size: 48px;
+        font-family: $main-font;
+        line-height: 50px;
+        font-weight: 600;
+        span {
+          font-weight: 800;
+        }
+      }
+      p{
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+
+    .triangle {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 20px 0 20px 20px;
+      border-color: transparent transparent transparent $main-blue;
+      position: absolute;
+      right: 0;
+      top: 37%;
+    }
+
+    @media screen and (max-width: 39.9375em) {
+      padding-right: 0;
+      padding-bottom: 10px;
+
+      .blurb-content {
+        h2 {
+          font-size: 30px;
+          line-height: 32px;
+        }
+        p {
+          font-size: 12px;
+        }
+      }
+    }
+
+    @media screen and (min-width: 40em) and (max-width: 63.9375em) {
+
+      .blurb-content {
+        h2 {
+          font-size: 36px;
+          line-height: 38px;
+        }
+      }
+    }
+  }
+
+  .orbit {
+    color: $main-blue;
+    text-align: right;
+
+    .edinburgh {
+      h3 {
+        line-height: 37px;
+        span {
+          font-weight: 800!important;
+        }
+      }
+    }
+
+    .loch {
+      h3 {
+        line-height: 35px;
+        
+        span {
+          color: #ffffff;
+          width: 37px;
+          height: 37px;
+          line-height: 37px;
+          -moz-border-radius: 50px;
+          -webkit-border-radius: 50px;
+          border-radius: 50px;
+          background: $main-blue;
+          display: inline-block;
+          text-align: center;
+          font-family: $serif;
+        }
+        b {
+          font-weight: 800;
+        }
+      }
+    }
+
+    .orbit-container {
+      padding-left: 70px;
+      padding-right: 90px;
+      min-height: 320px;
+      height: 100% !important;
+      font-size: 35px;
+      line-height: 38px;
+      font-family: $main-font;
+
+      hr{
+        border-bottom: 2px solid $main-blue;
+        margin: 1.25rem 190px;
+        width: 20rem;
+      }
+
+      h3 {
+        font-weight: 400;
+        font-family: $main-font;
+        max-width: 510px;
+      }
+
+      p {font-size: 14px; max-width: 510px;}
+
+    }
+
+    .orbit-previous, .orbit-next {
+      color: $main-blue;
+      font-size: 40px;
+      &:hover, &:focus {
+        background: transparent;
+      }
+    }
+
+    .orbit-bullets {
+      text-align: right;
+      padding-right: 90px;
+
+      button {
+        background-color: $light-blue;
+      }
+      button.is-active {
+        background-color: $main-blue;
+      }
+    }
+
+    @media screen and (max-width: 39.9375em) {
+      .orbit-container {
+        padding: 0 10px;
+
+        p {
+          font-size: 12px;
+          padding: 0 5px;
+        }
+
+      }
+
+      .edinburgh {
+        h3 {
+          line-height: 25px;
+        }
+      }
+
+      .loch {
+        h3 {
+          line-height: 25px;
+          span {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+          }
+        }
+      }
+
+      .orbit-previous, .orbit-next {
+        font-size: 21px;
+        padding: 0;
+      }
+    }
+
+    @media screen and (min-width: 40em) and (max-width: 63.9375em) {
+      .orbit-container {
+        padding: 0 50px;
+      }
+    }
+  }
+
+  .entry {
+    text-align: center;
+    color: $main-blue;
+    // padding-top: 250px;
+
+
+    h1 {
+      font-family: $main-font;
+      font-weight: 800;
+      font-size: 50px;
+      line-height: 58px;
+      margin: 40px 0 0 0;
+      @media screen and (max-width: 39.9375em) {
+        font-size: 28px;
+        line-height: 30px;
+      }
+
+      span {
+        font-family: $serif-two;
+        font-weight: 400;
+        font-size: 60px;
+        font-style: italic;
+        @media screen and (max-width: 39.9375em) {
+          font-size: 25px;
+          line-height: 27px; 
+        }
+      }
+    }
+
+    p{
+      padding: 25px 10%;
+      a {
+        color: $main-blue;
+        text-decoration: underline;
+      }
+      @media screen and (max-width: 39.9375em) {
+        font-size: 12px;
+      }
+    }
+    hr {
+      margin: 0 auto;
+      border-bottom: 3px solid $main-blue;
+      max-width: 40rem
+    }
+  }
+
+  .campbell {
+    text-align: center;
+    color: $main-blue;
+
+    h1 {
+      font-family: $main-font;
+      font-weight: 800;
+      font-size: 50px;
+      line-height: 58px;
+      margin-bottom: 2%;
+      @media screen and (max-width: 39.9375em) {
+        font-size: 28px;
+        line-height: 30px;
+      }
+
+      span {
+        font-family: $serif-two;
+        font-weight: 400;
+        font-size: 60px;
+        font-style: italic;
+        display: inline-block;
+        position: relative; 
+        @media screen and (max-width: 39.9375em) {
+          font-size: 25px;
+          line-height: 27px; 
+        }
+        @media screen and (min-width: 64em) {
+          &:before, &:after {
+            content: "";
+            position: absolute;
+            height: 5px;
+            border-bottom: 1px solid $main-blue;
+            top: 40%;
+            width: 120px;
+            // right: 100%;
+            // margin-right: 15px;
+          }
+          &:before {
+            right: 108%;
+          }
+          &:after {
+            left: 108%;
+
+          }
+        }
+      }
+    }
+  }
+}
+
+
+  .sign-up {
+    background: $main-blue;
+    text-align: center;
+    padding: 35px 0;
+
+    button {
+      color: $main-blue;
+      background: #ffffff;
+      padding: 25px 5%;
+      transition: all 0.4s ease 0s;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
