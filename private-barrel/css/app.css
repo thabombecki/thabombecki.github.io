@@ -12,7 +12,6 @@ body {
     margin-right: 0;
   }
 }
-
 @media screen and (min-width: 40em) and (max-width: 63.9375em) {
   .row .row {
     margin-right: 0;
@@ -32,7 +31,6 @@ body {
   text-align: center;
   padding: 15px 0;
 }
-
 @media screen and (max-width: 39.9375em) {
   .page-title img {
     width: 70%;
@@ -47,21 +45,18 @@ body {
   text-align: center;
   padding: 25px 0 3%;
 }
-
 .header p {
   font-size: 16px;
   color: #1b2640;
   margin-top: 30px;
   padding: 0 15%;
 }
-
 @media screen and (max-width: 39.9375em) {
   .header p {
     padding: 0;
     font-size: 13px;
   }
 }
-
 .content-title {
   background-image: url(../img/content-title-bg.jpg);
   background-position: center;
@@ -69,7 +64,6 @@ body {
   text-align: center;
   padding: 15px 0 18px 0;
 }
-
 @media screen and (max-width: 39.9375em) {
   .content-title img {
     width: 80%;
@@ -97,7 +91,6 @@ body {
   text-align: center;
   position: relative;
 }
-
 .reveal-content button {
   color: #ffffff;
   background: #e21d2c;
@@ -108,7 +101,6 @@ body {
   bottom: 5%;
   right: 29%;
 }
-
 @media screen and (max-width: 39.9375em) {
   .reveal-content button {
     font-size: 12px;
@@ -121,69 +113,56 @@ body {
   background-position: center;
   background-size: cover;
 }
-
 .content .video {
   padding: 20px 15px;
 }
-
 .content .video .responsive-embed {
   border: 15px solid #ffffff;
-  -webkit-box-shadow: 0px 5px 10px -2px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 5px 10px -2px rgba(0, 0, 0, 0.5);
 }
-
 @media screen and (max-width: 39.9375em) {
   .content .video .responsive-embed {
     border: 5px solid #ffffff;
   }
 }
-
 @media screen and (min-width: 40em) and (max-width: 63.9375em) {
   .content .video .responsive-embed {
     border: 10px solid #ffffff;
   }
 }
-
 @media screen and (min-width: 40em) and (max-width: 63.9375em) {
   .content .video {
     padding: 35px 15px;
   }
 }
-
 @media screen and (min-width: 64em) {
   .content .video {
     padding: 50px 120px;
   }
 }
-
 .content .blurb {
   padding-right: 20px;
   position: relative;
   padding-bottom: 70px;
 }
-
 .content .blurb .blurb-content {
   background-color: #243355;
   padding: 20px 25px;
   color: #ffffff;
 }
-
 .content .blurb .blurb-content h2 {
   font-size: 48px;
   font-family: "Open Sans", sans-serif;
   line-height: 50px;
   font-weight: 600;
 }
-
 .content .blurb .blurb-content h2 span {
   font-weight: 800;
 }
-
 .content .blurb .blurb-content p {
   font-size: 14px;
   font-weight: 600;
 }
-
 .content .blurb .triangle {
   width: 0;
   height: 0;
@@ -194,7 +173,6 @@ body {
   right: 0;
   top: 37%;
 }
-
 @media screen and (max-width: 39.9375em) {
   .content .blurb {
     padding-right: 0;
@@ -208,31 +186,25 @@ body {
     font-size: 12px;
   }
 }
-
 @media screen and (min-width: 40em) and (max-width: 63.9375em) {
   .content .blurb .blurb-content h2 {
     font-size: 36px;
     line-height: 38px;
   }
 }
-
 .content .orbit {
   color: #243355;
   text-align: right;
 }
-
 .content .orbit .edinburgh h3 {
   line-height: 37px;
 }
-
 .content .orbit .edinburgh h3 span {
   font-weight: 800 !important;
 }
-
 .content .orbit .loch h3 {
   line-height: 35px;
 }
-
 .content .orbit .loch h3 span {
   color: #ffffff;
   width: 37px;
@@ -244,11 +216,9 @@ body {
   text-align: center;
   font-family: "Taviraj", serif;
 }
-
 .content .orbit .loch h3 b {
   font-weight: 800;
 }
-
 .content .orbit .orbit-container {
   padding-left: 70px;
   padding-right: 90px;
@@ -258,46 +228,37 @@ body {
   line-height: 38px;
   font-family: "Open Sans", sans-serif;
 }
-
 .content .orbit .orbit-container hr {
   border-bottom: 2px solid #243355;
   margin: 1.25rem 190px;
   width: 20rem;
 }
-
 .content .orbit .orbit-container h3 {
   font-weight: 400;
   font-family: "Open Sans", sans-serif;
   max-width: 510px;
 }
-
 .content .orbit .orbit-container p {
   font-size: 14px;
   max-width: 510px;
 }
-
 .content .orbit .orbit-previous, .content .orbit .orbit-next {
   color: #243355;
   font-size: 40px;
 }
-
 .content .orbit .orbit-previous:hover, .content .orbit .orbit-previous:focus, .content .orbit .orbit-next:hover, .content .orbit .orbit-next:focus {
   background: transparent;
 }
-
 .content .orbit .orbit-bullets {
   text-align: right;
   padding-right: 90px;
 }
-
 .content .orbit .orbit-bullets button {
   background-color: #699cce;
 }
-
 .content .orbit .orbit-bullets button.is-active {
   background-color: #243355;
 }
-
 @media screen and (max-width: 39.9375em) {
   .content .orbit .orbit-container {
     padding: 0 10px;
@@ -322,18 +283,15 @@ body {
     padding: 0;
   }
 }
-
 @media screen and (min-width: 40em) and (max-width: 63.9375em) {
   .content .orbit .orbit-container {
     padding: 0 50px;
   }
 }
-
 .content .entry {
   text-align: center;
   color: #243355;
 }
-
 .content .entry h1 {
   font-family: "Open Sans", sans-serif;
   font-weight: 800;
@@ -341,54 +299,45 @@ body {
   line-height: 58px;
   margin: 40px 0 0 0;
 }
-
 @media screen and (max-width: 39.9375em) {
   .content .entry h1 {
     font-size: 28px;
     line-height: 30px;
   }
 }
-
 .content .entry h1 span {
   font-family: "Vollkorn", serif;
   font-weight: 400;
   font-size: 60px;
   font-style: italic;
 }
-
 @media screen and (max-width: 39.9375em) {
   .content .entry h1 span {
     font-size: 25px;
     line-height: 27px;
   }
 }
-
 .content .entry p {
   padding: 25px 10%;
 }
-
 .content .entry p a {
   color: #243355;
   text-decoration: underline;
 }
-
 @media screen and (max-width: 39.9375em) {
   .content .entry p {
     font-size: 12px;
   }
 }
-
 .content .entry hr {
   margin: 0 auto;
   border-bottom: 3px solid #243355;
   max-width: 40rem;
 }
-
 .content .campbell {
   text-align: center;
   color: #243355;
 }
-
 .content .campbell h1 {
   font-family: "Open Sans", sans-serif;
   font-weight: 800;
@@ -396,14 +345,12 @@ body {
   line-height: 58px;
   margin-bottom: 2%;
 }
-
 @media screen and (max-width: 39.9375em) {
   .content .campbell h1 {
     font-size: 28px;
     line-height: 30px;
   }
 }
-
 .content .campbell h1 span {
   font-family: "Vollkorn", serif;
   font-weight: 400;
@@ -412,14 +359,12 @@ body {
   display: inline-block;
   position: relative;
 }
-
 @media screen and (max-width: 39.9375em) {
   .content .campbell h1 span {
     font-size: 25px;
     line-height: 27px;
   }
 }
-
 @media screen and (min-width: 64em) {
   .content .campbell h1 span:before, .content .campbell h1 span:after {
     content: "";
@@ -442,16 +387,12 @@ body {
   text-align: center;
   padding: 35px 0;
 }
-
 .sign-up button {
   color: #243355;
   background: #ffffff;
   padding: 25px 5%;
-  -webkit-transition: all 0.4s ease 0s;
   transition: all 0.4s ease 0s;
 }
-
 .sign-up button:hover {
   opacity: 0.8;
-}
-/*# sourceMappingURL=app.css.map */
+}/*# sourceMappingURL=app.css.map */
