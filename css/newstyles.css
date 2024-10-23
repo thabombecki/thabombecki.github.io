@@ -61,6 +61,11 @@ h3 {
   color: #1b1a1a;
   background-color: #ffffff;
 }
+@media only screen and (max-width: 600px) {
+  .contact {
+    display: none;
+  }
+}
 .contact .contact-container {
   width: 85%;
   margin: 0 auto;
@@ -118,6 +123,11 @@ h3 {
   padding: 3.5% 0;
   font-size: 2vw;
   font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+  .work .work-item .client {
+    font-size: 6vw;
+  }
 }
 .work .work-item img {
   border-radius: 0%;
