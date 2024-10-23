@@ -127,7 +127,7 @@ h3 {
         img {
             border-radius: 0%;
             // border: 2px solid #ffffff;
-            opacity: 60%;
+            opacity: 80%;
         }
 
         a {
@@ -151,6 +151,13 @@ h3 {
 		      	}
             }
         }
+    }
+
+    .gallery-header {
+        font-weight: 600;
+        font-size: 4vw;
+        margin-bottom: 3%;
+        width: 100%;
     }
 }
 
