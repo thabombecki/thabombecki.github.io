@@ -7,10 +7,13 @@
     <link rel="stylesheet" href="css/foundation.css" />
     <!-- <link rel="stylesheet" href="css/custom.css" /> -->
     <link rel="stylesheet" href="css/newstyles.css" />
+    <link rel="stylesheet" href="css/var.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="js/vendor/modernizr.js"></script>
   </head>
   <body>
@@ -23,34 +26,77 @@
         </div>
     </div>
 
-    <div class="wrapper">
-
         <section class="header">
-            <div class="name">
-                <h1 class="animate__animated animate__fadeInDown">Eckhard Vorster</h1>
-                <h2>UI/UX Design | Frontend Development</h2>
-            </div>
-            <div class="smile animate__animated animate__rotateIn animate__faster">
-                <img src="img/smile.svg" alt="">
+            <div class="container">
+                <div class="name">
+                    <h1 class="animate__animated animate__fadeInLeft animate__fast">
+                        <span>E</span>ckhard<span>.</span>
+                    </h1>
+                    <h1 class="animate__animated animate__fadeInLeft">
+                        <span>V</span>orster<span>.</span>
+                    </h1>
+                    <h2>UI/UX Design & Frontend Development</h2>
+                </div>
+                <div class="dog">
+                    <div class="dog-img"><img src="img/dog_web.svg" alt=""></div>
+                    <!-- <div class='speech-bubble'>Hello!</div> -->
+                </div>
             </div>
         </section>
 
-        <section class="intro">
-            <p>
-                
-               UX/UI designer and front-end developer based in Cape Town.
+        <section class="section-heading">
+            <h3>Tools</h3>
+        </section>
 
-               Creating clean and easy-to-navigate websites while ensuring they are responsive for all devices.
-               
-              As a designer and developer, I am uniquely placed to bridge the gap between design and code. I understand what needs to be delivered as a designer and what should be expected as a developer. 
-               
+        <section class="container">
+            <div class="tools">
+                <img src="img/tools/figma.png" alt="Figma">
+                <img src="img/tools/photoshop.png" alt="Adobe PhotoShop">
+                <img src="img/tools/illustrator.png" alt="Adobe Illustrator">
+                <img src="img/tools/html.png" alt="HTML5">
+                <img src="img/tools/css.png" alt="CSS">
+                <img src="img/tools/sass.png" alt="SASS">
+                <img src="img/tools/vue.png" alt="Vue.js">
+                <img src="img/tools/vs-code.png" alt="VS Code">
+            </div>
+        </section>
+
+        <section class="blurb">
+                <div class="cat">
+                    <div class="cat-img"><img src="img/cat_web.svg" alt=""></div>
+                </div>
+                <div class="info">
+                    <p>Hi, I am a UX/UI designer and front-end developer based in Cape Town.
+                        Creating clean and easy-to-navigate websites and ensuring they are responsive for all devices.
+                     
+                       As a designer and developer, I am uniquely placed to bridge the gap between design and code. I understand what needs to be delivered as a designer and what should be expected as a developer.</p>
+                    <div class="arrow"></div>
+                </div>
+        </section>
+
+        <!-- <section class="intro">
+            <div class="container">
+                <p>
+                
+                   UX/UI designer and front-end developer based in Cape Town.
+                   Creating clean and easy-to-navigate websites while ensuring they are responsive for all devices.
+                
+                  As a designer and developer, I am uniquely placed to bridge the gap between design and code. I understand what needs to be delivered as a designer and what should be expected as a developer.
+                
                 </p>
+            </div>
+        </section> -->
+
+
+
+        <section class="section-heading">
+            <h3>Projects</h3>
         </section>
 
         <section class="work">
             <div class="work-item">
-                <img src="img/littleshop.png" alt="">
                 <div class="client">Checkers Little Shop</div>
+                <img src="img/littleshop.png" alt="">
                 <!-- <div class="roll">Design & Frontend Development</div> -->
                 <a href="littleshop/" target="_blank">
                     <div class="work-button">View</div>
@@ -58,8 +104,8 @@
             </div>
 
             <div class="work-item">
-                <img src="img/faircape.png" alt="">
                 <div class="client">Fair Cape Dairies</div>
+                <img src="img/faircape.png" alt="">
                 <!-- <div class="roll">Frontend Development</div> -->
                 <a href="https://www.faircape.com/" target="_blank">
                     <div class="work-button">View</div>
@@ -67,8 +113,8 @@
             </div>
 
             <div class="work-item">
-                <img src="img/old-mutual.png" alt="">
                 <div class="client">Old Mutual</div>
+                <img src="img/old-mutual.png" alt="">
                 <!-- <div class="roll">Design & Frontend Development</div> -->
                 <a href="https://www.retirementgame.co.za/" target="_blank">
                     <div class="work-button">View</div>
@@ -76,8 +122,8 @@
             </div>
 
             <div class="work-item">
-                <img src="img/rainmaker.png" alt="">
                 <div class="client">Rainmaker</div>
+                <img src="img/rainmaker.png" alt="">
                 <!-- <div class="roll">Design & Frontend Development</div> -->
                 <a href="https://rainmakermedia.co.za/" target="_blank">
                     <div class="work-button">View</div>
@@ -85,8 +131,8 @@
             </div>
 
             <div class="work-item">
-                <img src="img/Autocar.png" alt="">
                 <div class="client">Autocar Truck</div>
+                <img src="img/Autocar.png" alt="">
                 <!-- <div class="roll">Website Redesign & Frontend Development</div> -->
                 <a href="https://www.autocartruck.com/" target="_blank">
                     <div class="work-button">View</div>
@@ -94,8 +140,8 @@
             </div>
 
             <div class="work-item">
-                <img src="img/flavour.png" alt="">
                 <div class="client">Flavour & Co</div>
+                <img src="img/flavour.png" alt="">
                 <!-- <div class="roll">Design & Frontend Development</div> -->
                 <a href="flavour/" target="_blank">
                     <div class="work-button">View</div>
@@ -103,8 +149,8 @@
             </div>
 
             <div class="work-item">
-                <img src="img/private-barrel.png" alt="">
                 <div class="client">Checkers LiquorShop</div>
+                <img src="img/private-barrel.png" alt="">
                 <!-- <div class="roll">Design & Frontend Development</div> -->
                 <a href="private-barrel/" target="_blank">
                     <div class="work-button">View</div>
@@ -112,8 +158,8 @@
             </div>
 
             <div class="work-item">
-                <img src="img/spotcash.png" alt="">
                 <div class="client">Spotcash</div>
+                <img src="img/spotcash.png" alt="">
                 <!-- <div class="roll">Illustration</div> -->
                 <a href="spotcash.html" target="_blank">
                     <div class="work-button">View</div>
@@ -121,16 +167,15 @@
             </div>
 
             <div class="work-item">
-                <img src="img/wildlive.png" alt="">
                 <div class="client">Wild Live</div>
+                <img src="img/wildlive.png" alt="">
                 <!-- <div class="roll">Social Media & Illustration</div> -->
                 <a href="wildlive.html" target="_blank">
                     <div class="work-button">View</div>
                 </a>
             </div>
-
+            
         </section>
-    </div>
 
     <footer>
         <b>Have a great day!</b>

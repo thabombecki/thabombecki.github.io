@@ -1,47 +1,66 @@
+$aqua-bg: #2CCEB3;
+
 body, h1, h2, h3, h4, h5, h6, p {
 	font-family: "Montserrat", sans-serif!important;
   font-optical-sizing: auto;
   font-style: normal;
   line-height:1;
-  color: #ffffff;
-  
 }
 
-body {
-    background-color: #1b1a1a;
-}
+$body-font: 'Open Sans', sans-serif;
 
 
 h1 {
 	font-weight: 700;
-	font-size: 5.7vw;
-    letter-spacing: -0.2vw;
-	margin-left: -0.5%;
+	font-size: 11vw;
+    line-height: 0.9;
+    color: #ffffff;
+    font-family: "Libre Baskerville", serif!important;
+    font-weight: 400;
+    font-style: normal;
+    // text-transform: uppercase;
+    // text-shadow: 0px 2px 5px rgba(0,0,0,0.2);
 
 	@media only screen and (max-width: 600px) {
 		font-size: 9vw;
 	}
+
+    span {
+        color: #FFFA52;
+        // font-weight: 700;
+    }
 }
 
 h2 {
-	font-size: 1.5vw;
+	font-size: 2.3vw;
+    color: #ffffff;
+    background-color: #ffffff;
+    color: #2CCEB3;
+    line-height: 1.2;
+    margin-top: 5%;
 
 	@media only screen and (max-width: 600px) {
-		font-size: 2.5vw;
+		font-size: 2.3vw;
 	}
 }
 
 h3 {
-	font-size: 2vw;
-	font-weight: 600;
+    // font-family: "Libre Baskerville", serif!important;
+    font-weight: 400;
+	font-size: 4vw;
+	font-weight: 700;
+    color: #1b1a1a;
+    margin-bottom: 5%;
 }
 
-.wrapper {
+.container {
 	width: 85%;
-    padding: 4% 0;
 	max-width: 1440px;
 	margin: 0 auto;
 	margin-bottom: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
 	@media only screen and (max-width: 600px) {
 		width: 95%;
@@ -49,22 +68,122 @@ h3 {
 }
 
 .header {
+    background: $aqua-bg;
+    background-image: url(../img/dog_bg.png);
+    background-size: initial;
 	display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 8%;
+    // border-bottom: 5px solid #FF5540;
+    // border-bottom: 5px solid #FF5540;
 
-    .smile {
-        width: 9%;
-        img {
-            // width: 40%;
+    .name {
+        align-self: center;
+    }
+
+    .dog {
+        width: 35%;
+        .dog-img {
+            transform: rotateY(180deg);
+            img {
+                // width: 40%;
+            }
+        }    
+        .speech-bubble {
+            position: absolute;
+            top: 16%;
+            right: 36%;
+            margin: .5em auto;
+            padding: 1em;
+            width: 10em; height: 4em;
+            border-radius: .25em;
+            transform: rotate(-4deg) rotateY(15deg);
+            background: #ffffff;
+            font: 2em/4 Century Gothic, Verdana, sans-serif;
+            text-align: center;
+            color: #000000;
+
+            &::after {
+                top: 0; right: 0; bottom: 0; left: 0;
+            border-radius: inherit;
+            transform: rotate(2deg) translate(.35em, -.15em) scale(1.02);
+            background: #f4fbfe;
+            }
         }
+    }
+}
+
+.section-heading {
+    width: 85%;
+	max-width: 1440px;
+	margin: 0 auto;
+}
+
+.tools {
+	display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 8%;
+
+    img {
+        width: 8%;
+    }
+}
+
+
+
+.blurb {
+    background: #FFFA52;
+    background-image: url(../img/cat-bg.png);
+    background-size: 30%;
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 8%;
+    // border-bottom: 5px solid #FF5540;
+
+    .cat {
+        width: 25%;
+        .cat-img {  
+            img {
+                // width: 40%;
+            }
+        } 
+    }
+
+    .info {
+        width: 50%;
+        align-self: center;
+        background: #ffffff;
+        padding: 2%;
+        border-radius: 20px;
+        position: relative;
+
+        p {
+            margin-bottom: 0;
+            line-height: 1.5;
+            font-size: 1.2vw;
+        }
+
+        .arrow {
+            position: absolute;
+            width: 0; 
+            height: 0;
+            top: 43%; 
+            left: -3%;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent; 
+            
+            border-right:25px solid #ffffff; 
+          }
     }
 }
 
 .contact {
     color: #1b1a1a;
-    background-color: #ffffff;
+    background-color: #FFFA52;
 
 	@media only screen and (max-width: 600px) {
 		display: none;
@@ -111,6 +230,9 @@ h3 {
 }
 
 .work {
+    width: 85%;
+	max-width: 1440px;
+	margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -119,18 +241,21 @@ h3 {
     .work-item {
         width: 28%;
         margin-bottom: 5%;
-        border: 2px solid #ffffff;
-        border-radius: 3%;
+        // border: 2px solid #e3e3e3;
+        color: #1b1a1a;
+        text-align: center;
+        background: #ffffff;
+        // border-radius: 20px;
 
         @media only screen and (max-width: 600px) {
             width: 100%;
         }
 
         .client {
-            padding: 3.5% 0;
-            margin-left: 4%;
-            margin-top: 2%;
-            font-size: 2vw;
+            // padding: 3.5% 0;
+            // margin-left: 4%;
+            margin-bottom: 4%;
+            font-size: 1.7vw;
             font-weight: 600;
 
             @media only screen and (max-width: 600px) {
@@ -139,30 +264,29 @@ h3 {
         }
 
         img {
-            border-radius: 3% 3% 0 0 ;
+            // border-radius: 20px 20px 0 0 ;
             // border: 2px solid #ffffff;
-            opacity: 80%;
+            // opacity: 80%;
         }
 
         a {
             .work-button {
                 align-items: stretch;
                 color: #1b1a1a;
-                border: 1px solid #ffffff;
-                background: #ffffff;
-				width: 40%;
-                margin-top: 5%;
-				padding: 6px 0;
+                // border: 1px solid #ffffff;
+                background: #FFFA52;
+				width: 100%;
+				padding: 15px 0;
                 font-weight: 600;
 				transition: all 0.4s ease 0s;
 		      	box-shadow: inset 0 0 0 0 #1b1a1a;
 		      	cursor: pointer;
                 text-align: center;
-                border-bottom-left-radius: 8px;
+                // border-radius: 0 0 20px 20px;
 
 
                 @media only screen and (max-width: 600px) {
-                    border-bottom-left-radius: 2%;
+                    // border-bottom-left-radius: 2%;
                 }
 
 
@@ -185,7 +309,8 @@ h3 {
 footer {
     text-align: center;
     width: 100%;
-    background-color: #000000;
+    background-color: #2CCEB3;
+    color: #ffffff;
     padding: 2%;
     p {
         margin: 0;
