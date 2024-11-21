@@ -265,6 +265,7 @@ footer {
   background-color: #2CCEB3;
   color: #ffffff;
   padding: 2%;
+  border-top: 2px solid #FFFA52;
 }
 footer p {
   margin: 0;
