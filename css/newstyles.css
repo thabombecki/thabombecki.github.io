@@ -156,6 +156,11 @@ h3 {
   border-bottom: 15px solid transparent;
   border-right: 25px solid #ffffff;
 }
+@media only screen and (max-width: 600px) {
+  .blurb .info .arrow {
+    display: none;
+  }
+}
 
 .contact {
   color: #1b1a1a;
