@@ -206,8 +206,13 @@ dialog[open] { animation: pop .3s cubic-bezier(.3, 1.5, .5, 1); }
     padding-bottom: max(18px, env(safe-area-inset-bottom));
   }
 }
+/* Zero-height sticky bar keeps the close button pinned while the sheet scrolls. */
+.sheet-bar {
+  position: sticky; top: 0; z-index: 3; height: 0;
+  display: flex; justify-content: flex-end; margin-right: -6px;
+}
 .close {
-  position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
+  flex: none; margin-top: -6px; width: 36px; height: 36px;
   border: 2px solid var(--line); border-radius: 50%; background: var(--card); color: var(--ink);
   font-size: 1.3rem; line-height: 1; cursor: pointer; box-shadow: 2px 2px 0 var(--line);
 }
