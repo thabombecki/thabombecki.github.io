@@ -82,6 +82,7 @@ main { max-width: 600px; margin: 0 auto; padding: 0 16px 40px; }
   75% { rotate: -2.5deg; }
 }
 .hero-copy { min-width: 0; }
+.hero-copy .tagline { margin-top: 2px; }
 .kicker {
   margin: 0 0 4px; color: var(--orange); font-weight: 800; font-size: .9rem; letter-spacing: .5px;
 }
