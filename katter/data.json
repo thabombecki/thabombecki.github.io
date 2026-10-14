@@ -122,7 +122,6 @@
   "done": {
     "2026-10-15": [
       "water",
-      "open-up",
       "dry-food",
       "ants",
       "bin-out",
@@ -130,7 +129,9 @@
       "wet-food"
     ]
   },
-  "times": {},
+  "times": {
+    "2026-10-15": {}
+  },
   "diary": {
     "2026-10-15": "Die katte was poese"
   },
