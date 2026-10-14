@@ -130,10 +130,39 @@
       "wet-food"
     ]
   },
+  "times": {},
+  "diary": {
+    "2026-10-15": "Die katte was poese"
+  },
   "photos": {
     "2026-10-15": [
       "photos/2026-10-15/1791984608198.jpg",
       "photos/2026-10-15/1791984619451.jpg"
     ]
-  }
+  },
+  "captions": {},
+  "cats": [
+    {
+      "id": "batman",
+      "name": "Batman",
+      "avatar": "batman.png",
+      "bio": "",
+      "rating": {
+        "label": "Hungry stare",
+        "emoji": "😾",
+        "value": 5
+      }
+    },
+    {
+      "id": "harvey",
+      "name": "Harvey",
+      "avatar": "harvey.png",
+      "bio": "",
+      "rating": {
+        "label": "Shelf chaos",
+        "emoji": "🙀",
+        "value": 4
+      }
+    }
+  ]
 }
