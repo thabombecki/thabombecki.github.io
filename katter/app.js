@@ -16,12 +16,21 @@ const RAW = `https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${
 const TOKEN_KEY = 'katter-token';
 const PREVIEW_KEY = 'katter-preview';
 
+const HOME_TZ = 'Africa/Johannesburg';
+const AWAY_TZ = 'Asia/Tokyo';
+
+const DEFAULT_CATS = [
+  { id: 'batman', name: 'Batman', avatar: 'batman.png', bio: '', rating: { label: 'Hungry stare', emoji: '😾', value: 5 } },
+  { id: 'harvey', name: 'Harvey', avatar: 'harvey.png', bio: '', rating: { label: 'Shelf chaos', emoji: '🙀', value: 4 } },
+];
+
 const state = {
-  data: { tasks: [], done: {}, photos: {} },
+  data: { tasks: [], notes: [], done: {}, times: {}, diary: {}, photos: {}, captions: {}, cats: [] },
   sha: null,
   token: readToken(),
   selected: null,
   previews: {},   // photo path -> local object URL, so fresh uploads show before Pages redeploys
+  drafts: {},     // unsaved text in note/bio boxes, so re-renders don't wipe what's being typed
 };
 
 // Running on localhost without a token: edits are kept in this browser only, so the app can be tried out.
@@ -40,7 +49,15 @@ function key(d) {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-const TODAY = key(new Date());
+// "Today" is the sitter's day in South Africa, also for the owners viewing from Japan.
+function zonedKey(date, timeZone) {
+  return new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
+}
+const TODAY = zonedKey(new Date(), HOME_TZ);
+
+function zonedTime(date, timeZone) {
+  return new Intl.DateTimeFormat('en-GB', { timeZone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(date);
+}
 
 // ---------- storage helpers ----------
 
@@ -78,7 +95,16 @@ async function fetchRemote() {
 }
 
 function normalise(d) {
-  return { tasks: d.tasks || [], notes: d.notes || [], done: d.done || {}, photos: d.photos || {} };
+  return {
+    tasks: d.tasks || [],
+    notes: d.notes || [],
+    done: d.done || {},
+    times: d.times || {},
+    diary: d.diary || {},
+    photos: d.photos || {},
+    captions: d.captions || {},
+    cats: d.cats || structuredClone(DEFAULT_CATS),
+  };
 }
 
 async function load() {
@@ -132,8 +158,8 @@ function change(mutator, message) {
   render();
   if (isPreview()) {
     // Preview photos only live in memory, so keep them out of storage.
-    const { tasks, notes, done } = state.data;
-    try { localStorage.setItem(PREVIEW_KEY, JSON.stringify({ tasks, notes, done })); } catch { /* ignore */ }
+    const { photos, captions, ...rest } = state.data;
+    try { localStorage.setItem(PREVIEW_KEY, JSON.stringify(rest)); } catch { /* ignore */ }
     return;
   }
   queue.push({ mutator, message });
@@ -188,10 +214,25 @@ async function saveError(res) {
 
 // ---------- mutators ----------
 
-const setDone = (day, id, on) => (d) => {
+const setDone = (day, id, on, at = new Date().toISOString()) => (d) => {
   const list = new Set(d.done[day] || []);
   on ? list.add(id) : list.delete(id);
   d.done[day] = [...list];
+  d.times[day] = d.times[day] || {};
+  if (on) d.times[day][id] = d.times[day][id] || at;
+  else delete d.times[day][id];
+};
+const setDiary = (day, text) => (d) => {
+  if (text) d.diary[day] = text;
+  else delete d.diary[day];
+};
+const setCaption = (path, text) => (d) => {
+  if (text) d.captions[path] = text;
+  else delete d.captions[path];
+};
+const setCat = (id, fields) => (d) => {
+  const cat = d.cats.find((c) => c.id === id);
+  if (cat) Object.assign(cat, structuredClone(fields));
 };
 const addPhoto = (day, path) => (d) => {
   const list = d.photos[day] || [];
@@ -200,6 +241,7 @@ const addPhoto = (day, path) => (d) => {
 const removePhoto = (day, path) => (d) => {
   d.photos[day] = (d.photos[day] || []).filter((p) => p !== path);
   if (!d.photos[day].length) delete d.photos[day];
+  delete d.captions[path];
 };
 const addTask = (task) => (d) => {
   if (!d.tasks.some((t) => t.id === task.id)) d.tasks.push(task);
@@ -246,11 +288,149 @@ function countdownText() {
   const first = key(DAYS[0]);
   const last = key(DAYS[DAYS.length - 1]);
   if (TODAY < first) {
-    const days = Math.round((DAYS[0] - new Date(new Date().toDateString())) / 86400000);
+    const [y, m, d] = TODAY.split('-').map(Number);
+    const days = Math.round((DAYS[0] - new Date(y, m - 1, d)) / 86400000);
     return days === 1 ? '🧳 Starts tomorrow!' : `🧳 Starts in ${days} days`;
   }
   if (TODAY > last) return '💜 All done, thanks for looking after us!';
   return `🐾 Day ${DAYS.findIndex((d) => key(d) === TODAY) + 1} of ${DAYS.length}`;
+}
+
+const shortDate = (day) => DAYS.find((d) => key(d) === day)
+  .toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+
+function photoImg(path, alt) {
+  const img = document.createElement('img');
+  img.loading = 'lazy';
+  img.alt = alt;
+  img.src = state.previews[path] || path;
+  // Pages takes a minute to publish new files; raw.githubusercontent has them sooner
+  img.addEventListener('error', () => { if (!img.src.startsWith(RAW)) img.src = RAW + path; }, { once: true });
+  return img;
+}
+
+const allPhotos = () => DAYS.flatMap((d) => (state.data.photos[key(d)] || []).map((path) => ({ day: key(d), path })));
+
+// A text block: plain text for viewers, a textarea with a Save button for the sitter.
+function editableText({ id, value = '', placeholder, empty, rows = 3, onSave }) {
+  const wrap = document.createElement('div');
+  wrap.className = 'editable';
+  if (!canEdit()) {
+    const p = document.createElement('p');
+    p.className = value ? 'editable-text' : 'muted';
+    p.textContent = value || empty || '';
+    wrap.append(p);
+    return wrap;
+  }
+  const ta = document.createElement('textarea');
+  ta.rows = rows;
+  ta.placeholder = placeholder;
+  ta.value = state.drafts[id] ?? value;
+  const save = document.createElement('button');
+  save.type = 'button';
+  save.className = 'btn primary';
+  save.textContent = 'Save';
+  save.disabled = ta.value === value;
+  ta.addEventListener('input', () => {
+    state.drafts[id] = ta.value;
+    save.disabled = ta.value === value;
+  });
+  save.addEventListener('click', () => {
+    delete state.drafts[id];
+    onSave(ta.value.trim());
+    toast('Saved ✍️');
+  });
+  wrap.append(ta, save);
+  return wrap;
+}
+
+function renderAlbum() {
+  const photos = allPhotos();
+  $('album-empty').hidden = photos.length > 0;
+  $('slideshow').hidden = photos.length < 2;
+  const box = $('album-days');
+  box.replaceChildren();
+  for (const d of DAYS) {
+    const k = key(d);
+    const list = state.data.photos[k] || [];
+    if (!list.length) continue;
+    const group = document.createElement('div');
+    group.className = 'album-day';
+    const label = document.createElement('div');
+    label.className = 'album-date';
+    label.textContent = shortDate(k);
+    const strip = document.createElement('div');
+    strip.className = 'album-strip';
+    for (const p of list) {
+      const thumb = document.createElement('button');
+      thumb.type = 'button';
+      thumb.className = 'thumb';
+      thumb.append(photoImg(p, `Batman and Harvey, ${shortDate(k)}`));
+      thumb.addEventListener('click', () => openLightbox(photos, photos.findIndex((x) => x.path === p)));
+      strip.append(thumb);
+    }
+    group.append(label, strip);
+    box.append(group);
+  }
+}
+
+function renderCats() {
+  const box = $('cats');
+  box.replaceChildren();
+  for (const cat of state.data.cats) {
+    const card = document.createElement('article');
+    card.className = 'cat-card';
+
+    const head = document.createElement('div');
+    head.className = 'cat-head';
+    const img = document.createElement('img');
+    img.className = 'avatar';
+    img.src = cat.avatar;
+    img.alt = cat.name;
+    const name = document.createElement('h4');
+    name.textContent = cat.name;
+    head.append(img, name);
+
+    const rating = document.createElement('div');
+    rating.className = 'rating';
+    const label = document.createElement('span');
+    label.className = 'rating-label';
+    label.textContent = cat.rating.label;
+    const meter = document.createElement('span');
+    meter.className = 'meter';
+    for (let i = 1; i <= 5; i++) {
+      const pip = document.createElement(canEdit() ? 'button' : 'span');
+      pip.textContent = cat.rating.emoji;
+      pip.className = i <= cat.rating.value ? 'pip on' : 'pip';
+      if (canEdit()) {
+        pip.type = 'button';
+        pip.setAttribute('aria-label', `${cat.rating.label} ${i} of 5`);
+        pip.addEventListener('click', () =>
+          change(setCat(cat.id, { rating: { ...cat.rating, value: i } }), `${cat.name}: ${cat.rating.label} ${i}/5`));
+      }
+      meter.append(pip);
+    }
+    rating.append(label, meter);
+
+    const bio = editableText({
+      id: `bio-${cat.id}`,
+      value: cat.bio,
+      placeholder: `Quirks, favourite spots, how ${cat.name} likes to be greeted…`,
+      empty: 'Profile coming soon 🐾',
+      onSave: (text) => change(setCat(cat.id, { bio: text }), `Update ${cat.name}'s profile`),
+    });
+    card.append(head, rating, bio);
+    box.append(card);
+  }
+}
+
+function tickClocks() {
+  const now = new Date();
+  const away = zonedTime(now, AWAY_TZ);
+  const hour = Number(away.slice(0, 2));
+  const night = hour >= 22 || hour < 7;
+  $('clocks').textContent = `🇯🇵 ${away}${night ? ' 😴' : ''} · 🇿🇦 ${zonedTime(now, HOME_TZ)}`;
+  $('clocks').title = night ? "It's night in Japan" : '';
 }
 
 function render() {
@@ -339,6 +519,8 @@ function render() {
     editor.append(li);
   }
 
+  renderAlbum();
+  renderCats();
   if ($('day').open) renderDay();
 }
 
@@ -399,6 +581,14 @@ function renderDay() {
       text.className = 'text';
       text.textContent = t.days && t.icon ? `${t.label} ${t.icon}` : t.label;
       label.append(box, mark, text);
+      const at = state.data.times[day]?.[t.id];
+      if (box.checked && at) {
+        const time = document.createElement('span');
+        time.className = 'time';
+        time.textContent = zonedTime(new Date(at), HOME_TZ);
+        time.title = 'Ticked at (South African time)';
+        label.append(time);
+      }
       li.append(label);
       list.append(li);
     }
@@ -410,23 +600,33 @@ function renderDay() {
     list.append(cheer);
   }
 
+  const note = state.data.diary[day] || '';
+  $('diary').hidden = !editing && !note;
+  $('diary-body').replaceChildren(editableText({
+    id: `diary-${day}`,
+    value: note,
+    placeholder: 'How did the boys do today? 🐾',
+    rows: 3,
+    onSave: (text) => change(setDiary(day, text), `Note for ${day}`),
+  }));
+
   const photos = state.data.photos[day] || [];
   $('no-photos').hidden = photos.length > 0;
   const strip = $('photos');
   strip.replaceChildren();
-  for (const p of photos) {
-    const frame = document.createElement('div');
+  const lbList = photos.map((path) => ({ day, path }));
+  photos.forEach((p, i) => {
+    const frame = document.createElement('button');
+    frame.type = 'button';
     frame.className = 'polaroid';
-    const img = document.createElement('img');
-    img.loading = 'lazy';
-    img.alt = `Batman and Harvey, ${day}`;
-    img.src = state.previews[p] || p;
-    // Pages takes a minute to publish new files; raw.githubusercontent has them sooner
-    img.addEventListener('error', () => { if (!img.src.startsWith(RAW)) img.src = RAW + p; }, { once: true });
-    frame.addEventListener('click', () => openLightbox(day, p, img.src));
-    frame.append(img);
+    frame.append(photoImg(p, `Batman and Harvey, ${day}`));
+    const cap = document.createElement('span');
+    cap.className = 'cap';
+    cap.textContent = state.data.captions[p] || '';
+    frame.append(cap);
+    frame.addEventListener('click', () => openLightbox(lbList, i));
     strip.append(frame);
-  }
+  });
 }
 
 function toggleTask(day, task, on) {
@@ -501,13 +701,47 @@ async function uploadPhotos(files) {
   }
 }
 
-let lightboxPhoto = null;
+// ---------- lightbox / slideshow ----------
 
-function openLightbox(day, path, src) {
-  lightboxPhoto = { day, path };
-  $('lightbox-img').src = src;
+const lb = { list: [], index: 0, timer: null };
+
+function openLightbox(list, index, play = false) {
+  lb.list = list;
+  stopSlideshow();
+  showPhoto(index);
+  if (!$('lightbox').open) $('lightbox').showModal();
+  if (play) startSlideshow();
+}
+
+function showPhoto(index) {
+  const n = lb.list.length;
+  if (!n) { $('lightbox').close(); return; }
+  lb.index = ((index % n) + n) % n;
+  const { day, path } = lb.list[lb.index];
+  const img = $('lightbox-img');
+  img.onerror = () => { img.onerror = null; img.src = RAW + path; };
+  img.src = state.previews[path] || path;
+  img.alt = `Batman and Harvey, ${shortDate(day)}`;
+  $('lb-meta').textContent = n > 1 ? `${shortDate(day)} · ${lb.index + 1} / ${n}` : shortDate(day);
+  $('lb-prev').hidden = $('lb-next').hidden = $('lb-play').hidden = n < 2;
+
+  const caption = state.data.captions[path] || '';
+  $('lb-caption').textContent = caption;
+  $('lb-caption').hidden = canEdit() || !caption;
+  $('caption-form').hidden = !canEdit();
+  $('caption-input').value = caption;
   $('delete-photo').hidden = !canEdit();
-  $('lightbox').showModal();
+}
+
+function startSlideshow() {
+  stopSlideshow();
+  lb.timer = setInterval(() => showPhoto(lb.index + 1), 3500);
+  $('lb-play').textContent = '⏸ Pause';
+}
+function stopSlideshow() {
+  clearInterval(lb.timer);
+  lb.timer = null;
+  $('lb-play').textContent = '▶ Play';
 }
 
 // ---------- misc UI ----------
@@ -537,6 +771,8 @@ function slug(s) {
 
 function closeOnBackdrop(dialog) {
   dialog.addEventListener('click', (e) => {
+    // Backdrop clicks target the dialog itself; keyboard "clicks" have no position, so ignore those.
+    if (e.target !== dialog || (e.clientX === 0 && e.clientY === 0)) return;
     const r = dialog.getBoundingClientRect();
     const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
     if (!inside) dialog.close();
@@ -556,12 +792,39 @@ function wire() {
   closeOnBackdrop($('lightbox'));
 
   $('delete-photo').addEventListener('click', () => {
-    if (!lightboxPhoto || !confirm('Delete this photo?')) return;
-    const { day, path } = lightboxPhoto;
-    $('lightbox').close();
+    const item = lb.list[lb.index];
+    if (!item || !confirm('Delete this photo?')) return;
+    const { day, path } = item;
     change(removePhoto(day, path), `Remove photo (${day})`);
     if (!isPreview()) deleteFile(path, `Delete photo (${day})`).catch(() => { /* orphaned file is harmless */ });
+    lb.list.splice(lb.index, 1);
+    showPhoto(lb.index);
   });
+
+  $('lb-prev').addEventListener('click', () => { stopSlideshow(); showPhoto(lb.index - 1); });
+  $('lb-next').addEventListener('click', () => { stopSlideshow(); showPhoto(lb.index + 1); });
+  $('lb-play').addEventListener('click', () => (lb.timer ? stopSlideshow() : startSlideshow()));
+  $('lightbox').addEventListener('close', stopSlideshow);
+  $('lightbox').addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowLeft') { stopSlideshow(); showPhoto(lb.index - 1); }
+    if (e.key === 'ArrowRight') { stopSlideshow(); showPhoto(lb.index + 1); }
+  });
+  let touchX = null;
+  $('lightbox-img').addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+  $('lightbox-img').addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) > 40) { stopSlideshow(); showPhoto(lb.index + (dx < 0 ? 1 : -1)); }
+  });
+  $('caption-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const { day, path } = lb.list[lb.index];
+    change(setCaption(path, $('caption-input').value.trim()), `Caption for photo (${day})`);
+    toast('Caption saved ✍️');
+  });
+  $('slideshow').addEventListener('click', () => openLightbox(allPhotos(), 0, true));
 
   $('add-task-form').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -610,7 +873,8 @@ function wire() {
 
   // Keep viewers up to date without hammering the API.
   const refresh = async () => {
-    if (document.hidden || isPreview() || saving || queue.length) return;
+    const typing = ['TEXTAREA', 'INPUT'].includes(document.activeElement?.tagName);
+    if (document.hidden || isPreview() || saving || queue.length || typing) return;
     try { await load(); render(); } catch { /* ignore */ }
   };
   document.addEventListener('visibilitychange', refresh);
@@ -627,10 +891,16 @@ async function init() {
   }
   render();
 
+  tickClocks();
+  setInterval(tickClocks, 15000);
+
   const params = new URLSearchParams(location.search);
   if (params.has('edit')) {
     history.replaceState(null, '', location.pathname);
     if (!state.token) $('unlock').showModal();
+  } else if (canEdit() && DAYS.some((d) => key(d) === TODAY)) {
+    // The sitter lands straight on today's jobs.
+    openDay(TODAY);
   }
 }
 

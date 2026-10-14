@@ -8,6 +8,10 @@
   <meta name="theme-color" content="#fff4ea">
   <link rel="icon" type="image/png" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Batman &amp; Harvey">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
@@ -21,6 +25,7 @@
       <h1>Batman <span class="amp">&amp;</span> Harvey</h1>
       <p class="tagline">16 days of crunchies, cuddles &amp; litter duty</p>
       <p id="countdown" class="countdown"></p>
+      <p id="clocks" class="clocks" aria-label="Time in Japan and South Africa"></p>
       <div class="hero-actions">
         <span id="mode-badge" class="badge" hidden></span>
         <button id="lock-btn" class="link-btn" hidden>Lock</button>
@@ -49,8 +54,24 @@
       <p class="hint">Tap a day to see its jobs 🌸</p>
     </section>
 
+    <section id="album" class="card">
+      <div class="section-head">
+        <h3>📸 Photo album</h3>
+        <button id="slideshow" class="btn primary" type="button" hidden>▶ Slideshow</button>
+      </div>
+      <p id="album-empty" class="muted">Photos of the boys will appear here, day by day.</p>
+      <div id="album-days" class="album"></div>
+    </section>
+
+    <section class="card">
+      <h3>🐾 Meet the boys</h3>
+      <div id="cats" class="cat-grid"></div>
+    </section>
+
     <section id="edit-tasks" class="card" hidden>
-      <h3>✏️ Edit the daily jobs</h3>
+      <h3>✏️ Sitter tools</h3>
+      <a class="btn calendar-btn" href="reminders.ics">📅 Add bin, Mavis &amp; plant reminders to my calendar</a>
+      <h4 class="tools-sub">Edit the daily jobs</h4>
       <p class="muted">New jobs are added to every day.</p>
       <ul id="task-editor" class="task-editor"></ul>
       <form id="add-task-form" class="add-task">
@@ -78,6 +99,11 @@
 
     <ul id="tasks" class="tasks"></ul>
 
+    <section id="diary" class="diary">
+      <h3>📝 Note from the sitter</h3>
+      <div id="diary-body"></div>
+    </section>
+
     <div class="photos-head">
       <h3>📸 Photo of the day</h3>
       <label id="add-photo" class="btn primary" hidden>
@@ -90,10 +116,21 @@
   </dialog>
 
   <dialog id="lightbox" class="lightbox">
-    <img id="lightbox-img" alt="">
+    <div class="lb-stage">
+      <button id="lb-prev" class="lb-nav prev" type="button" aria-label="Previous photo">‹</button>
+      <img id="lightbox-img" alt="">
+      <button id="lb-next" class="lb-nav next" type="button" aria-label="Next photo">›</button>
+    </div>
+    <p id="lb-meta" class="lb-meta"></p>
+    <p id="lb-caption" class="lb-caption" hidden></p>
+    <form id="caption-form" class="caption-form" hidden>
+      <input id="caption-input" type="text" maxlength="120" placeholder="Add a caption…">
+      <button class="btn" type="submit">Save</button>
+    </form>
     <div class="dialog-actions">
-      <button id="delete-photo" class="btn danger" hidden>Delete photo</button>
-      <button id="close-lightbox" class="btn">Close</button>
+      <button id="delete-photo" class="btn danger" type="button" hidden>Delete</button>
+      <button id="lb-play" class="btn" type="button">▶ Play</button>
+      <button id="close-lightbox" class="btn" type="button">Close</button>
     </div>
   </dialog>
 

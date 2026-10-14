@@ -333,3 +333,101 @@ dialog[open] { animation: pop .3s cubic-bezier(.3, 1.5, .5, 1); }
   position: fixed; inset: 0; width: 100vw; height: 100vh; margin: 0; padding: 0;
   border: 0; background: transparent; pointer-events: none; overflow: visible;
 }
+
+/* ---------- clocks ---------- */
+
+.clocks {
+  margin: 8px 0 0; font-weight: 800; font-size: .88rem; color: var(--ink); opacity: .8;
+  font-variant-numeric: tabular-nums;
+}
+.clocks:empty { display: none; }
+
+/* ---------- album ---------- */
+
+.section-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.album { display: grid; gap: 14px; margin-top: 12px; }
+.album-date { font-family: "Fredoka", "Nunito", system-ui, sans-serif; font-weight: 600; font-size: .9rem; margin-bottom: 6px; }
+.album-strip { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 6px; scroll-snap-type: x mandatory; }
+.thumb {
+  flex: none; width: 92px; height: 92px; padding: 0; border: 2px solid var(--line); border-radius: 12px;
+  overflow: hidden; cursor: zoom-in; background: var(--soft-line); scroll-snap-align: start;
+  box-shadow: 2px 2px 0 var(--line);
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---------- cats ---------- */
+
+.cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
+.cat-card { border: 2px solid var(--line); border-radius: 16px; padding: 12px; background: var(--bg); }
+.cat-head { display: flex; align-items: center; gap: 10px; }
+.avatar {
+  width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--line); background: #ffe2cf;
+  box-shadow: 2px 2px 0 var(--line); object-fit: cover;
+}
+.cat-head h4 { margin: 0; font-family: "Cherry Bomb One", "Fredoka", system-ui, sans-serif; font-weight: 400; font-size: 1.4rem; }
+.rating { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 8px; margin: 10px 0 8px; }
+.rating-label { font-weight: 800; font-size: .82rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+.meter { display: flex; gap: 1px; }
+.pip { font-size: 1.05rem; line-height: 1; padding: 0; border: 0; background: none; opacity: .22; filter: grayscale(1); }
+.pip.on { opacity: 1; filter: none; }
+button.pip { cursor: pointer; }
+
+/* ---------- editable text (note, bios) ---------- */
+
+.editable { display: grid; gap: 8px; }
+.editable-text { margin: 0; white-space: pre-wrap; font-weight: 600; }
+.editable textarea {
+  width: 100%; resize: vertical; padding: 9px 12px; font: inherit; font-weight: 600;
+  border: 2px solid var(--line); border-radius: 12px; background: var(--card); color: var(--ink);
+}
+.editable .btn { justify-self: end; }
+.btn:disabled { opacity: .45; cursor: default; box-shadow: none; }
+
+.diary {
+  margin: 0 0 20px; padding: 12px 14px; border-radius: 14px;
+  border: 2px solid var(--line); background: var(--orange-soft);
+}
+.diary h3 { margin: 0 0 8px; font-size: 1rem; }
+.diary .editable textarea { background: var(--card); }
+
+/* ---------- tick times ---------- */
+
+.tasks .time {
+  margin-left: auto; flex: none; font-size: .75rem; font-weight: 800; color: var(--muted);
+  background: var(--card); border: 1.5px solid var(--soft-line); border-radius: 99px; padding: 1px 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- polaroid captions ---------- */
+
+button.polaroid { font: inherit; color: #1f1a1c; text-align: center; display: block; width: 100%; }
+.polaroid { padding-bottom: 6px !important; }
+.polaroid .cap {
+  display: block; min-height: 18px; margin-top: 5px; font-size: .75rem; font-weight: 700; line-height: 1.2;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ---------- lightbox ---------- */
+
+.lightbox { width: min(720px, calc(100% - 24px)); }
+.lb-stage { position: relative; }
+.lb-stage img { display: block; width: 100%; max-height: 68vh; object-fit: contain; border-radius: 12px; background: #000; touch-action: pan-y; }
+.lb-nav {
+  position: absolute; top: 50%; translate: 0 -50%; width: 40px; height: 40px; border-radius: 50%;
+  border: 2px solid var(--line); background: var(--card); color: var(--ink); font-size: 1.6rem; line-height: 1;
+  cursor: pointer; box-shadow: 2px 2px 0 var(--line); display: grid; place-items: center; padding: 0 0 3px;
+}
+.lb-nav.prev { left: 8px; }
+.lb-nav.next { right: 8px; }
+.lb-meta { margin: 10px 0 0; font-weight: 800; font-size: .85rem; color: var(--muted); text-align: center; }
+.lb-caption { margin: 4px 0 0; font-weight: 700; text-align: center; }
+.caption-form { display: flex; gap: 8px; margin-top: 10px; }
+.caption-form input {
+  flex: 1; min-width: 0; padding: 8px 12px; font: inherit; font-weight: 600;
+  border: 2px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink);
+}
+
+/* ---------- sitter tools ---------- */
+
+.calendar-btn { text-decoration: none; display: flex; width: 100%; margin: 12px 0 4px; white-space: normal; text-align: center; }
+.tools-sub { margin: 18px 0 0; font-family: "Fredoka", "Nunito", system-ui, sans-serif; font-weight: 600; }
