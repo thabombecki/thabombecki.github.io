@@ -413,12 +413,12 @@ function celebrate(day) {
   confettiCanvas.el.hidePopover?.();
   confettiCanvas.el.showPopover?.();
   const shapes = confetti.shapeFromText
-    ? ['🐾', '🐟', '💜'].map((text) => confetti.shapeFromText({ text, scalar: 2 }))
+    ? ['🐾', '🐟', '💛'].map((text) => confetti.shapeFromText({ text, scalar: 2 }))
     : undefined;
   const opts = { particleCount: 70, spread: 80, startVelocity: 40, scalar: 2, origin: { y: 0.7 } };
   confettiCanvas.fire({ ...opts, shapes, angle: 60, origin: { x: 0, y: 0.75 } });
   confettiCanvas.fire({ ...opts, shapes, angle: 120, origin: { x: 1, y: 0.75 } });
-  confettiCanvas.fire({ particleCount: 60, spread: 100, origin: { y: 0.6 }, colors: ['#ff8a3d', '#7c5cff', '#3cc58a', '#ff6b9a'] });
+  confettiCanvas.fire({ particleCount: 60, spread: 100, origin: { y: 0.6 }, colors: ['#f5e33b', '#19e3c4', '#ff6b81', '#ffffff'] });
   setTimeout(() => confettiCanvas.el.hidePopover?.(), 5000);
 }
 

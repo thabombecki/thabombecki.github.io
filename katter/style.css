@@ -183,7 +183,7 @@ dialog {
   box-shadow: 6px 6px 0 var(--line);
   max-width: calc(100% - 32px);
 }
-dialog::backdrop { background: rgba(30, 20, 50, .55); backdrop-filter: blur(3px); }
+dialog::backdrop { background: rgba(8, 38, 35, .55); backdrop-filter: blur(3px); }
 dialog[open] { animation: pop .3s cubic-bezier(.3, 1.5, .5, 1); }
 @keyframes pop {
   from { opacity: 0; transform: translateY(30px) scale(.96); }
