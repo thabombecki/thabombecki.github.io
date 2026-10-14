@@ -595,6 +595,19 @@ function wire() {
     toast('Editing unlocked on this device 🔓');
   });
 
+  // Secret login: five quick taps on the cat banner open the unlock box.
+  let taps = 0;
+  let tapTimer;
+  document.querySelector('.banner').addEventListener('click', () => {
+    taps += 1;
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => { taps = 0; }, 1500);
+    if (taps < 5) return;
+    taps = 0;
+    if (state.token) toast('Already unlocked on this device ✏️');
+    else $('unlock').showModal();
+  });
+
   // Keep viewers up to date without hammering the API.
   const refresh = async () => {
     if (document.hidden || isPreview() || saving || queue.length) return;

@@ -73,6 +73,7 @@ main { max-width: 600px; margin: 0 auto; padding: 0 16px 40px; }
   display: block; width: 100%; height: auto; aspect-ratio: 680 / 232;
   border: 3px solid var(--line); border-radius: 22px; box-shadow: 5px 5px 0 var(--line);
   background: #ffe2cf; rotate: -1deg;
+  touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .banner:hover { animation: wiggle .5s ease-in-out; }
 @keyframes wiggle {
