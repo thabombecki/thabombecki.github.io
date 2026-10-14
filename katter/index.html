@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Batman &amp; Harvey</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-cats" aria-hidden="true">
+      <span class="cat cat-batman">🐈‍⬛</span>
+      <span class="cat cat-harvey">🐈</span>
+    </div>
+    <h1>Batman <span class="amp">&amp;</span> Harvey</h1>
+    <p class="tagline">15 days of crunchies, cuddles &amp; litter duty</p>
+    <p id="countdown" class="countdown"></p>
+    <div class="hero-actions">
+      <span id="mode-badge" class="badge" hidden></span>
+      <button id="lock-btn" class="link-btn" hidden>Lock</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card progress-card">
+      <div class="progress-head">
+        <span class="progress-title">Cat-sitting progress</span>
+        <span id="progress-text" class="progress-text">Loading…</span>
+      </div>
+      <div class="track">
+        <div id="progress-bar" class="track-fill"></div>
+        <span id="progress-cat" class="track-cat" aria-hidden="true">🐈</span>
+      </div>
+    </section>
+
+    <section class="card calendar">
+      <div class="month">October 2026</div>
+      <div class="weekdays">
+        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+      </div>
+      <div id="grid" class="grid"></div>
+      <p class="hint">Tap a day to see its jobs 🐾</p>
+    </section>
+
+    <section id="edit-tasks" class="card" hidden>
+      <h3>✏️ Edit the daily jobs</h3>
+      <p class="muted">The same list applies to every day.</p>
+      <ul id="task-editor" class="task-editor"></ul>
+      <form id="add-task-form" class="add-task">
+        <input id="new-task" type="text" placeholder="e.g. Brush Harvey" maxlength="60" required>
+        <button class="btn primary" type="submit">Add</button>
+      </form>
+    </section>
+
+    <footer class="foot">Made with 🐟 for two very good boys</footer>
+  </main>
+
+  <dialog id="day" class="sheet">
+    <button id="close-day" class="close" aria-label="Close">×</button>
+    <div class="sheet-head">
+      <div id="day-date" class="day-date"></div>
+      <div>
+        <h2 id="day-title"></h2>
+        <p id="day-mood" class="mood"></p>
+      </div>
+    </div>
+
+    <ul id="tasks" class="tasks"></ul>
+
+    <div class="photos-head">
+      <h3>📸 Photo of the day</h3>
+      <label id="add-photo" class="btn primary" hidden>
+        + Add photo
+        <input id="photo-input" type="file" accept="image/*" multiple hidden>
+      </label>
+    </div>
+    <p id="no-photos" class="muted empty">No photos yet. The boys are waiting for their close-up.</p>
+    <div id="photos" class="photos"></div>
+  </dialog>
+
+  <dialog id="lightbox" class="lightbox">
+    <img id="lightbox-img" alt="">
+    <div class="dialog-actions">
+      <button id="delete-photo" class="btn danger" hidden>Delete photo</button>
+      <button id="close-lightbox" class="btn">Close</button>
+    </div>
+  </dialog>
+
+  <dialog id="unlock" class="unlock">
+    <form method="dialog" id="unlock-form">
+      <h3>🔑 Unlock editing</h3>
+      <p class="muted">Paste your GitHub fine-grained token. It's only stored on this device.</p>
+      <input id="token-input" type="password" autocomplete="off" placeholder="github_pat_…" required>
+      <div class="dialog-actions">
+        <button class="btn" value="cancel" formnovalidate>Cancel</button>
+        <button class="btn primary" value="ok">Unlock</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
