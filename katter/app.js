@@ -326,6 +326,8 @@ function openDay(day) {
   state.selected = day;
   renderDay();
   $('day').showModal();
+  // Viewers get the party every time they open a finished day.
+  if (!canEdit() && isDone(day)) celebrate(day);
 }
 
 function renderDay() {
