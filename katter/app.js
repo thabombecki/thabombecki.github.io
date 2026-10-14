@@ -172,8 +172,18 @@ async function saveData(batch, message, retried = false) {
     render();
     return saveData(batch, message, true);
   }
-  if (res.status === 401 || res.status === 403) throw new Error('GitHub rejected the token. Lock and unlock again with a valid token.');
-  throw new Error(`Couldn't save (GitHub ${res.status}).`);
+  throw await saveError(res);
+}
+
+async function saveError(res) {
+  let detail = '';
+  try { detail = (await res.json()).message || ''; } catch { /* no body */ }
+  if (res.status === 401) return new Error('GitHub says the token is invalid or expired. Tap Lock and unlock with a new one.');
+  if (res.status === 403 || res.status === 404) {
+    return new Error(`GitHub won't let this token save (${res.status}${detail ? `: ${detail}` : ''}). `
+      + 'Check the token has this repo selected and Contents set to "Read and write".');
+  }
+  return new Error(`Couldn't save (GitHub ${res.status}${detail ? `: ${detail}` : ''}).`);
 }
 
 // ---------- mutators ----------
@@ -441,8 +451,7 @@ async function uploadPhotos(files) {
       if (!isPreview()) {
         const b64 = bytesToB64(new Uint8Array(await blob.arrayBuffer()));
         const res = await putFile(path, b64, `Photo for ${day}`);
-        if (res.status === 401 || res.status === 403) throw new Error('GitHub rejected the token.');
-        if (!res.ok) throw new Error(`Upload failed (GitHub ${res.status}).`);
+        if (!res.ok) throw await saveError(res);
       }
       state.previews[path] = URL.createObjectURL(blob);
       change(addPhoto(day, path), `Add photo (${day})`);
@@ -480,7 +489,7 @@ function toast(msg, error = false) {
   toastTimer = setTimeout(() => {
     el.hidden = true;
     try { el.hidePopover?.(); } catch { /* not shown */ }
-  }, error ? 6000 : 2500);
+  }, error ? 10000 : 2500);
 }
 
 function slug(s) {
