@@ -1,10 +1,26 @@
 {
   "tasks": [
-    { "id": "feed-am", "label": "Morning feed" },
-    { "id": "feed-pm", "label": "Evening feed" },
-    { "id": "water", "label": "Fresh water" },
-    { "id": "litter", "label": "Clean litter box" }
+    {
+      "id": "feed-am",
+      "label": "Morning feed"
+    },
+    {
+      "id": "feed-pm",
+      "label": "Evening feed"
+    },
+    {
+      "id": "water",
+      "label": "Fresh water"
+    },
+    {
+      "id": "litter",
+      "label": "Clean litter box"
+    }
   ],
-  "done": {},
+  "done": {
+    "2026-10-15": [
+      "feed-am"
+    ]
+  },
   "photos": {}
 }
