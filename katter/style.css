@@ -149,9 +149,9 @@ h1 { margin: 0; font-size: clamp(2rem, 9vw, 2.9rem); line-height: 1.05; letter-s
 .cell:active { transform: translate(1px, 1px); box-shadow: 0 0 0 var(--line); }
 .cell.blank { visibility: hidden; }
 .cell .num { font-size: clamp(1rem, 4.5vw, 1.35rem); font-weight: 600; line-height: 1; }
-.cell .dots { display: flex; gap: 2px; margin-top: 5px; }
-.cell .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--soft-line); }
-.cell .dot.on { background: var(--orange); }
+.cell .icons { font-size: clamp(.55rem, 2.4vw, .72rem); line-height: 1; height: 1em; margin-top: 3px; letter-spacing: -1px; }
+.cell .mini { width: 62%; height: 5px; margin-top: 4px; border-radius: 99px; background: var(--soft-line); overflow: hidden; }
+.cell .mini span { display: block; height: 100%; background: var(--orange); border-radius: 99px; }
 .cell .cam { position: absolute; top: -8px; right: -6px; font-size: .9rem; rotate: 12deg; }
 
 .cell.today { background: var(--orange-soft); }
@@ -166,7 +166,7 @@ h1 { margin: 0; font-size: clamp(2rem, 9vw, 2.9rem); line-height: 1.05; letter-s
 .cell.done .num {
   position: absolute; top: 4px; left: 6px; font-size: .68rem; opacity: .65;
 }
-.cell.done .dots { display: none; }
+.cell.done .icons, .cell.done .mini { display: none; }
 .cell.done::after {
   content: "済"; position: absolute; top: 50%; left: 50%; translate: -50% -50%;
   width: 64%; aspect-ratio: 1; display: grid; place-items: center;
@@ -221,6 +221,15 @@ dialog[open] { animation: pop .3s cubic-bezier(.3, 1.5, .5, 1); }
 .mood { margin: 2px 0 0; color: var(--muted); font-weight: 700; font-size: .92rem; }
 
 .tasks { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 8px; }
+.tasks .group {
+  font-family: "Fredoka", "Nunito", system-ui, sans-serif; font-weight: 600; font-size: 1rem;
+  margin-top: 8px; padding-bottom: 2px; border-bottom: 2px dashed var(--soft-line);
+}
+.tasks .group:first-child { margin-top: 0; }
+.tasks .note {
+  padding: 10px 14px; border-radius: 14px; border: 2px dashed var(--purple);
+  background: var(--purple-soft); font-weight: 700; font-size: .92rem;
+}
 .tasks label {
   display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer;
   border: 2px solid var(--line); border-radius: 14px; background: var(--card);
@@ -274,11 +283,16 @@ dialog[open] { animation: pop .3s cubic-bezier(.3, 1.5, .5, 1); }
 .btn.danger { color: var(--danger); }
 
 .task-editor { list-style: none; padding: 0; margin: 12px 0; }
-.task-editor li { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 2px dashed var(--soft-line); font-weight: 700; }
+.task-editor .only { display: block; color: var(--muted); font-size: .78rem; font-weight: 700; margin-left: 1.6em; }
+.task-editor li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 2px dashed var(--soft-line); font-weight: 700; }
 .task-editor button {
   background: none; border: 0; color: var(--danger); font-size: 1.3rem; cursor: pointer; padding: 0 6px;
 }
 .add-task { display: flex; gap: 8px; }
+.add-task select {
+  padding: 9px 6px; font: inherit; font-weight: 700; border: 2px solid var(--line); border-radius: 12px;
+  background: var(--bg); color: var(--ink);
+}
 .add-task input, .unlock input {
   flex: 1; min-width: 0; padding: 9px 12px; font: inherit; font-weight: 600;
   border: 2px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--ink);

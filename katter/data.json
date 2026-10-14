@@ -1,28 +1,127 @@
 {
   "tasks": [
     {
-      "id": "feed-am",
-      "label": "Morning feed"
+      "id": "open-up",
+      "label": "Open up for Batman & Harvey",
+      "when": "am"
     },
     {
-      "id": "feed-pm",
-      "label": "Evening feed"
+      "id": "dry-food",
+      "label": "Check the dry food",
+      "when": "am"
     },
     {
       "id": "water",
-      "label": "Fresh water"
+      "label": "Fill the water bowls (and fountain if needed)",
+      "when": "am"
     },
     {
-      "id": "litter",
-      "label": "Clean litter box"
+      "id": "ants",
+      "label": "Check for ants at the food bowl",
+      "when": "am"
+    },
+    {
+      "id": "bin-out",
+      "label": "Put the municipal bin out front before 08:00",
+      "when": "am",
+      "days": [
+        "2026-10-15",
+        "2026-10-22",
+        "2026-10-29"
+      ],
+      "icon": "🗑️"
+    },
+    {
+      "id": "mavis-food",
+      "label": "Make sure Mavis has something to eat or drink",
+      "when": "am",
+      "days": [
+        "2026-10-19",
+        "2026-10-26"
+      ],
+      "icon": "👋"
+    },
+    {
+      "id": "plants-courtyard",
+      "label": "Water the plants in the courtyard",
+      "when": "am",
+      "days": [
+        "2026-10-21",
+        "2026-10-28"
+      ],
+      "icon": "🪴"
+    },
+    {
+      "id": "plants-flat",
+      "label": "Water the plants in the upstairs flat",
+      "when": "am",
+      "days": [
+        "2026-10-21",
+        "2026-10-28"
+      ],
+      "icon": "🪴"
+    },
+    {
+      "id": "wet-food",
+      "label": "Give wet food",
+      "when": "pm"
+    },
+    {
+      "id": "bin-in",
+      "label": "Bring the municipal bin back in",
+      "when": "pm",
+      "days": [
+        "2026-10-15",
+        "2026-10-22",
+        "2026-10-29"
+      ],
+      "icon": "🗑️"
+    }
+  ],
+  "notes": [
+    {
+      "id": "mavis",
+      "text": "Mavis usually arrives just after 09:00.",
+      "when": "am",
+      "days": [
+        "2026-10-19",
+        "2026-10-26"
+      ],
+      "icon": "👋"
+    },
+    {
+      "id": "laundry",
+      "text": "You can put any laundry you'd like washed in the laundry basket.",
+      "when": "am",
+      "days": [
+        "2026-10-19",
+        "2026-10-26"
+      ],
+      "icon": "🧺"
+    },
+    {
+      "id": "alice",
+      "text": "Alice comes to clean the house.",
+      "when": "am",
+      "days": [
+        "2026-10-21",
+        "2026-10-28"
+      ],
+      "icon": "🧹"
+    },
+    {
+      "id": "home",
+      "text": "We should be home around 18:00. Okaeri! 🎌",
+      "when": "pm",
+      "days": [
+        "2026-10-30"
+      ],
+      "icon": "🏠"
     }
   ],
   "done": {
     "2026-10-15": [
-      "feed-am",
-      "feed-pm",
-      "water",
-      "litter"
+      "water"
     ]
   },
   "photos": {}

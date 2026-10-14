@@ -6,7 +6,7 @@ const CONFIG = {
   branch: 'main',
   dir: 'katter',          // folder inside the repo
   start: new Date(2026, 9, 15),
-  days: 15,
+  days: 16,
   maxPhotoSide: 1600,
   photoQuality: 0.8,
 };
@@ -78,7 +78,7 @@ async function fetchRemote() {
 }
 
 function normalise(d) {
-  return { tasks: d.tasks || [], done: d.done || {}, photos: d.photos || {} };
+  return { tasks: d.tasks || [], notes: d.notes || [], done: d.done || {}, photos: d.photos || {} };
 }
 
 async function load() {
@@ -132,8 +132,8 @@ function change(mutator, message) {
   render();
   if (isPreview()) {
     // Preview photos only live in memory, so keep them out of storage.
-    const { tasks, done } = state.data;
-    try { localStorage.setItem(PREVIEW_KEY, JSON.stringify({ tasks, done })); } catch { /* ignore */ }
+    const { tasks, notes, done } = state.data;
+    try { localStorage.setItem(PREVIEW_KEY, JSON.stringify({ tasks, notes, done })); } catch { /* ignore */ }
     return;
   }
   queue.push({ mutator, message });
@@ -210,12 +210,24 @@ const removeTask = (id) => (d) => {
 
 // ---------- rendering ----------
 
+// A task or note without `days` applies to every day; otherwise only to the listed dates.
+const appliesTo = (day) => (item) => !item.days || item.days.includes(day);
+const tasksFor = (day) => state.data.tasks.filter(appliesTo(day));
+const notesFor = (day) => state.data.notes.filter(appliesTo(day));
+
 function doneCount(day) {
   const done = new Set(state.data.done[day] || []);
-  return state.data.tasks.filter((t) => done.has(t.id)).length;
+  return tasksFor(day).filter((t) => done.has(t.id)).length;
 }
 function isDone(day) {
-  return state.data.tasks.length > 0 && doneCount(day) === state.data.tasks.length;
+  const total = tasksFor(day).length;
+  return total > 0 && doneCount(day) === total;
+}
+
+// Icons for the extras on a day, shown on its calendar cell.
+function iconsFor(day) {
+  const icons = [...tasksFor(day), ...notesFor(day)].filter((x) => x.days && x.icon).map((x) => x.icon);
+  return [...new Set(icons)].slice(0, 3);
 }
 
 const MOODS = {
@@ -243,7 +255,6 @@ function countdownText() {
 
 function render() {
   const editing = canEdit();
-  const total = state.data.tasks.length;
 
   $('mode-badge').hidden = !editing;
   $('mode-badge').textContent = isPreview() ? '👀 Preview: saved in this browser only' : '✏️ Editing';
@@ -256,7 +267,7 @@ function render() {
   const pct = (finished / DAYS.length) * 100;
   $('progress-bar').style.width = `${pct}%`;
   $('progress-cat').style.left = `${Math.max(pct, 3)}%`;
-  $('progress-text').textContent = finished === DAYS.length ? '15/15 🎉' : `${finished} of ${DAYS.length} days`;
+  $('progress-text').textContent = finished === DAYS.length ? `${DAYS.length}/${DAYS.length} 🎉` : `${finished} of ${DAYS.length} days`;
 
   // calendar
   const grid = $('grid');
@@ -270,6 +281,7 @@ function render() {
   for (const d of DAYS) {
     const k = key(d);
     const n = doneCount(k);
+    const total = tasksFor(k).length;
     const cell = document.createElement('button');
     cell.type = 'button';
     cell.className = 'cell';
@@ -282,14 +294,15 @@ function render() {
     const num = document.createElement('span');
     num.className = 'num';
     num.textContent = d.getDate();
-    const dots = document.createElement('span');
-    dots.className = 'dots';
-    for (let i = 0; i < total; i++) {
-      const dot = document.createElement('span');
-      dot.className = i < n ? 'dot on' : 'dot';
-      dots.append(dot);
-    }
-    cell.append(num, dots);
+    const icons = document.createElement('span');
+    icons.className = 'icons';
+    icons.textContent = iconsFor(k).join('');
+    const bar = document.createElement('span');
+    bar.className = 'mini';
+    const fill = document.createElement('span');
+    fill.style.width = `${total ? (n / total) * 100 : 0}%`;
+    bar.append(fill);
+    cell.append(num, icons, bar);
 
     if ((state.data.photos[k] || []).length) {
       const cam = document.createElement('span');
@@ -307,13 +320,20 @@ function render() {
   for (const t of state.data.tasks) {
     const li = document.createElement('li');
     const span = document.createElement('span');
-    span.textContent = t.label;
+    span.textContent = `${t.when === 'pm' ? '🌙' : '🌅'} ${t.label}`;
+    if (t.days) {
+      const when = document.createElement('small');
+      when.className = 'only';
+      when.textContent = `only ${t.days.map((x) => Number(x.slice(-2))).join(', ')} Oct`;
+      span.append(when);
+    }
     const del = document.createElement('button');
     del.type = 'button';
     del.textContent = '×';
     del.setAttribute('aria-label', `Remove ${t.label}`);
     del.addEventListener('click', () => {
-      if (confirm(`Remove "${t.label}" from every day?`)) change(removeTask(t.id), `Remove task: ${t.label}`);
+      const where = t.days ? 'the days it is on' : 'every day';
+      if (confirm(`Remove "${t.label}" from ${where}?`)) change(removeTask(t.id), `Remove task: ${t.label}`);
     });
     li.append(span, del);
     editor.append(li);
@@ -349,22 +369,39 @@ function renderDay() {
   const done = new Set(state.data.done[day] || []);
   const list = $('tasks');
   list.replaceChildren();
-  for (const t of state.data.tasks) {
-    const li = document.createElement('li');
-    const label = document.createElement('label');
-    const box = document.createElement('input');
-    box.type = 'checkbox';
-    box.checked = done.has(t.id);
-    box.disabled = !editing;
-    box.addEventListener('change', () => toggleTask(day, t, box.checked));
-    const mark = document.createElement('span');
-    mark.className = 'box';
-    const text = document.createElement('span');
-    text.className = 'text';
-    text.textContent = t.label;
-    label.append(box, mark, text);
-    li.append(label);
-    list.append(li);
+  for (const [when, heading] of [['am', '🌅 Morning'], ['pm', '🌙 Evening']]) {
+    const tasks = tasksFor(day).filter((t) => (t.when || 'am') === when);
+    const notes = notesFor(day).filter((n) => (n.when || 'am') === when);
+    if (!tasks.length && !notes.length) continue;
+
+    const head = document.createElement('li');
+    head.className = 'group';
+    head.textContent = heading;
+    list.append(head);
+
+    for (const n of notes) {
+      const li = document.createElement('li');
+      li.className = 'note';
+      li.textContent = `${n.icon || 'ℹ️'} ${n.text}`;
+      list.append(li);
+    }
+    for (const t of tasks) {
+      const li = document.createElement('li');
+      const label = document.createElement('label');
+      const box = document.createElement('input');
+      box.type = 'checkbox';
+      box.checked = done.has(t.id);
+      box.disabled = !editing;
+      box.addEventListener('change', () => toggleTask(day, t, box.checked));
+      const mark = document.createElement('span');
+      mark.className = 'box';
+      const text = document.createElement('span');
+      text.className = 'text';
+      text.textContent = t.days && t.icon ? `${t.label} ${t.icon}` : t.label;
+      label.append(box, mark, text);
+      li.append(label);
+      list.append(li);
+    }
   }
   if (isDone(day)) {
     const cheer = document.createElement('li');
@@ -530,7 +567,8 @@ function wire() {
     e.preventDefault();
     const label = $('new-task').value.trim();
     if (!label) return;
-    change(addTask({ id: `${slug(label)}-${Date.now().toString(36)}`, label }), `Add task: ${label}`);
+    const when = $('new-task-when').value;
+    change(addTask({ id: `${slug(label)}-${Date.now().toString(36)}`, label, when }), `Add task: ${label}`);
     $('new-task').value = '';
   });
 

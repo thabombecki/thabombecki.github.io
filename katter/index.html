@@ -19,7 +19,7 @@
     <div class="hero-copy">
       <p class="kicker">いってらっしゃい! Enjoy Japan 🇯🇵</p>
       <h1>Batman <span class="amp">&amp;</span> Harvey</h1>
-      <p class="tagline">15 days of crunchies, cuddles &amp; litter duty</p>
+      <p class="tagline">16 days of crunchies, cuddles &amp; litter duty</p>
       <p id="countdown" class="countdown"></p>
       <div class="hero-actions">
         <span id="mode-badge" class="badge" hidden></span>
@@ -51,9 +51,13 @@
 
     <section id="edit-tasks" class="card" hidden>
       <h3>✏️ Edit the daily jobs</h3>
-      <p class="muted">The same list applies to every day.</p>
+      <p class="muted">New jobs are added to every day.</p>
       <ul id="task-editor" class="task-editor"></ul>
       <form id="add-task-form" class="add-task">
+        <select id="new-task-when" aria-label="Morning or evening">
+          <option value="am">🌅 AM</option>
+          <option value="pm">🌙 PM</option>
+        </select>
         <input id="new-task" type="text" placeholder="e.g. Brush Harvey" maxlength="60" required>
         <button class="btn primary" type="submit">Add</button>
       </form>
