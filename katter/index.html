@@ -60,10 +60,11 @@
     <section id="album" class="card">
       <div class="section-head">
         <h3>📸 Photo album</h3>
-        <button id="slideshow" class="btn primary" type="button" hidden>▶ Slideshow</button>
+        <span id="album-count" class="album-count"></span>
       </div>
-      <p id="album-empty" class="muted">Photos of the boys will appear here, day by day.</p>
-      <div id="album-days" class="album"></div>
+      <p id="album-empty" class="muted">Photos of the boys will appear here.</p>
+      <div id="album-preview" class="album-preview"></div>
+      <button id="show-all" class="btn primary show-all" type="button" hidden>Show all</button>
     </section>
 
     <section id="cats-section" class="card" hidden>
@@ -121,6 +122,18 @@
     </div>
     <p id="no-photos" class="muted empty">No photos yet. The boys are waiting for their close-up.</p>
     <div id="photos" class="photos"></div>
+  </dialog>
+
+  <dialog id="gallery" class="sheet gallery">
+    <div class="sheet-head">
+      <button id="close-gallery" class="close" aria-label="Close">×</button>
+      <div>
+        <h2>📸 All photos</h2>
+        <p id="gallery-count" class="mood"></p>
+      </div>
+    </div>
+    <button id="slideshow" class="btn primary slideshow-btn" type="button" hidden>▶ Slideshow</button>
+    <div id="album-days" class="album"></div>
   </dialog>
 
   <dialog id="lightbox" class="lightbox">

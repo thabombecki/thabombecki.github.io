@@ -379,34 +379,71 @@ function editableText({ id, value = '', placeholder, empty, rows = 3, onSave }) 
   return wrap;
 }
 
+function photoThumb(item, list, cls = 'thumb', onClick = () => openLightbox(list, list.indexOf(item))) {
+  const thumb = document.createElement('button');
+  thumb.type = 'button';
+  thumb.className = cls;
+  thumb.append(photoImg(item.path, `Batman and Harvey, ${shortDate(item.day)}`));
+  thumb.addEventListener('click', onClick);
+  return thumb;
+}
+
+const ALBUM_PREVIEW = 4;
+
 function renderAlbum() {
   const photos = allPhotos();
-  $('album-empty').hidden = photos.length > 0;
+  const n = photos.length;
+  $('album-empty').hidden = n > 0;
+  $('album-count').textContent = n ? `${n} photo${n === 1 ? '' : 's'}` : '';
+  $('show-all').hidden = n === 0;
+  $('show-all').textContent = `Show all (${n})`;
+
+  // Newest first, one row that fills the card; the last tile hints at how many more there are.
+  const latest = photos.slice(-ALBUM_PREVIEW).reverse();
+  const preview = $('album-preview');
+  preview.replaceChildren();
+  const more = n - ALBUM_PREVIEW;
+  latest.forEach((item, i) => {
+    const last = i === latest.length - 1 && more > 0;
+    const tile = photoThumb(item, latest, 'tile', last ? openGallery : undefined);
+    if (last) {
+      const badge = document.createElement('span');
+      badge.className = 'more';
+      badge.textContent = `+${more}`;
+      tile.append(badge);
+    }
+    preview.append(tile);
+  });
+
+  if ($('gallery').open) renderGallery();
+}
+
+function renderGallery() {
+  const photos = allPhotos();
+  $('gallery-count').textContent = `${photos.length} photo${photos.length === 1 ? '' : 's'} of two very good boys`;
   $('slideshow').hidden = photos.length < 2;
   const box = $('album-days');
   box.replaceChildren();
   for (const d of DAYS) {
     const k = key(d);
-    const list = state.data.photos[k] || [];
-    if (!list.length) continue;
+    const items = photos.filter((x) => x.day === k);
+    if (!items.length) continue;
     const group = document.createElement('div');
     group.className = 'album-day';
     const label = document.createElement('div');
     label.className = 'album-date';
     label.textContent = shortDate(k);
-    const strip = document.createElement('div');
-    strip.className = 'album-strip';
-    for (const p of list) {
-      const thumb = document.createElement('button');
-      thumb.type = 'button';
-      thumb.className = 'thumb';
-      thumb.append(photoImg(p, `Batman and Harvey, ${shortDate(k)}`));
-      thumb.addEventListener('click', () => openLightbox(photos, photos.findIndex((x) => x.path === p)));
-      strip.append(thumb);
-    }
-    group.append(label, strip);
+    const grid = document.createElement('div');
+    grid.className = 'album-grid';
+    for (const item of items) grid.append(photoThumb(item, photos));
+    group.append(label, grid);
     box.append(group);
   }
+}
+
+function openGallery() {
+  renderGallery();
+  $('gallery').showModal();
 }
 
 function renderCats() {
@@ -888,6 +925,9 @@ function wire() {
     toast('Caption saved ✍️');
   });
   $('slideshow').addEventListener('click', () => openLightbox(allPhotos(), 0, true));
+  $('show-all').addEventListener('click', openGallery);
+  $('close-gallery').addEventListener('click', () => $('gallery').close());
+  closeOnBackdrop($('gallery'));
 
   $('add-task-form').addEventListener('submit', (e) => {
     e.preventDefault();
