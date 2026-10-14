@@ -26,6 +26,7 @@
       <p class="tagline">16 days of crunchies, cuddles &amp; litter duty</p>
       <p id="countdown" class="countdown"></p>
       <p id="clocks" class="clocks" aria-label="Time in Japan and South Africa"></p>
+      <p id="trip-status" class="trip-status" hidden></p>
       <div class="hero-actions">
         <span id="mode-badge" class="badge" hidden></span>
         <button id="lock-btn" class="link-btn" hidden>Lock</button>
@@ -63,7 +64,7 @@
       <div id="album-days" class="album"></div>
     </section>
 
-    <section class="card">
+    <section id="cats-section" class="card" hidden>
       <h3>🐾 Meet the boys</h3>
       <div id="cats" class="cat-grid"></div>
     </section>
@@ -96,6 +97,11 @@
         <p id="day-mood" class="mood"></p>
       </div>
     </div>
+
+    <section id="travel" class="travel" hidden>
+      <h3>✈️ Owners' travel <small>(SA time)</small></h3>
+      <ul id="travel-list"></ul>
+    </section>
 
     <ul id="tasks" class="tasks"></ul>
 

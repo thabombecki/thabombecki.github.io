@@ -434,3 +434,20 @@ button.polaroid { font: inherit; color: #1f1a1c; text-align: center; display: bl
 
 .calendar-btn { text-decoration: none; display: flex; width: 100%; margin: 12px 0 4px; white-space: normal; text-align: center; }
 .tools-sub { margin: 18px 0 0; font-family: "Fredoka", "Nunito", system-ui, sans-serif; font-weight: 600; }
+
+/* ---------- owners' travel (sitter only) ---------- */
+
+.trip-status {
+  display: inline-block; margin: 8px 0 0; padding: 3px 12px; border-radius: 99px;
+  border: 2px solid var(--line); background: var(--purple-soft); font-weight: 800; font-size: .85rem;
+}
+.travel {
+  margin: 0 0 16px; padding: 12px 14px; border-radius: 14px;
+  border: 2px solid var(--line); background: var(--purple-soft);
+}
+.travel h3 { margin: 0 0 6px; font-size: 1rem; }
+.travel h3 small { font-family: "Nunito", system-ui, sans-serif; font-weight: 700; font-size: .75rem; color: var(--muted); }
+.travel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.travel li { display: grid; grid-template-columns: auto 1fr; gap: 0 10px; align-items: baseline; font-weight: 700; font-size: .92rem; }
+.travel strong { font-variant-numeric: tabular-nums; font-size: 1rem; }
+.travel small { grid-column: 2; color: var(--muted); font-weight: 700; font-size: .78rem; }

@@ -19,6 +19,18 @@ const PREVIEW_KEY = 'katter-preview';
 const HOME_TZ = 'Africa/Johannesburg';
 const AWAY_TZ = 'Asia/Tokyo';
 
+// The owners' flights (times in UTC). Booking reference and seats are left out on purpose:
+// this file is public.
+const DXB = { code: 'DXB', city: 'Dubai', tz: 'Asia/Dubai' };
+const CPT = { code: 'CPT', city: 'Cape Town', tz: HOME_TZ };
+const HND = { code: 'HND', city: 'Tokyo', tz: AWAY_TZ };
+const TRIP = [
+  { flight: 'EK771', from: CPT, to: DXB, dep: '2026-10-15T16:25:00Z', arr: '2026-10-16T01:50:00Z' },
+  { flight: 'EK312', from: DXB, to: HND, dep: '2026-10-16T03:40:00Z', arr: '2026-10-16T13:20:00Z' },
+  { flight: 'EK313', from: HND, to: DXB, dep: '2026-10-29T15:05:00Z', arr: '2026-10-30T02:55:00Z' },
+  { flight: 'EK770', from: DXB, to: CPT, dep: '2026-10-30T05:10:00Z', arr: '2026-10-30T14:45:00Z' },
+];
+
 const DEFAULT_CATS = [
   { id: 'batman', name: 'Batman', avatar: 'batman.png', bio: '', rating: { label: 'Hungry stare', emoji: '😾', value: 5 } },
   { id: 'harvey', name: 'Harvey', avatar: 'harvey.png', bio: '', rating: { label: 'Shelf chaos', emoji: '🙀', value: 4 } },
@@ -266,9 +278,32 @@ function isDone(day) {
   return total > 0 && doneCount(day) === total;
 }
 
+// Departures and arrivals, filed under the South African date they happen on.
+const TRAVEL = TRIP.flatMap((leg) => [
+  { kind: 'dep', at: new Date(leg.dep), place: leg.from, flight: leg.flight },
+  { kind: 'arr', at: new Date(leg.arr), place: leg.to, flight: leg.flight },
+]);
+const travelFor = (day) => TRAVEL.filter((e) => zonedKey(e.at, HOME_TZ) === day);
+
+function tripStatus(now = new Date()) {
+  const t = now.getTime();
+  const at = (iso) => new Date(iso).getTime();
+  if (t < at(TRIP[0].dep)) return `✈️ Owners fly out Thu 15 Oct, ${zonedTime(new Date(TRIP[0].dep), HOME_TZ)}`;
+  for (let i = 0; i < TRIP.length; i++) {
+    const leg = TRIP[i];
+    if (t < at(leg.arr)) return t >= at(leg.dep) ? `✈️ Owners are in the air to ${leg.to.city}` : null;
+    const next = TRIP[i + 1];
+    if (next && t < at(next.dep)) {
+      return leg.to === HND ? '🇯🇵 Owners are in Japan' : `⏳ Owners are on a layover in ${leg.to.city}`;
+    }
+  }
+  return '🏠 Owners are home!';
+}
+
 // Icons for the extras on a day, shown on its calendar cell.
 function iconsFor(day) {
   const icons = [...tasksFor(day), ...notesFor(day)].filter((x) => x.days && x.icon).map((x) => x.icon);
+  if (canEdit() && travelFor(day).length) icons.unshift('✈️');
   return [...new Set(icons)].slice(0, 3);
 }
 
@@ -431,6 +466,9 @@ function tickClocks() {
   const night = hour >= 22 || hour < 7;
   $('clocks').textContent = `🇯🇵 ${away}${night ? ' 😴' : ''} · 🇿🇦 ${zonedTime(now, HOME_TZ)}`;
   $('clocks').title = night ? "It's night in Japan" : '';
+  const status = canEdit() ? tripStatus(now) : null;
+  $('trip-status').hidden = !status;
+  $('trip-status').textContent = status || '';
 }
 
 function render() {
@@ -520,7 +558,9 @@ function render() {
   }
 
   renderAlbum();
-  renderCats();
+  $('cats-section').hidden = !editing;
+  if (editing) renderCats();
+  tickClocks();
   if ($('day').open) renderDay();
 }
 
@@ -547,6 +587,29 @@ function renderDay() {
     `${date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}`;
   $('day-mood').textContent = `Day ${DAYS.indexOf(date) + 1} · ${moodFor(day)}`;
   $('add-photo').hidden = !editing;
+
+  const travel = editing ? travelFor(day) : [];
+  $('travel').hidden = !travel.length;
+  const rows = $('travel-list');
+  rows.replaceChildren();
+  for (const e of travel) {
+    const li = document.createElement('li');
+    // Big time is SA time, since the pop-up is organised by SA dates; the airport's local time sits underneath.
+    const time = document.createElement('strong');
+    time.textContent = zonedTime(e.at, HOME_TZ);
+    const what = document.createElement('span');
+    what.textContent = `${e.kind === 'dep' ? '🛫 Leave' : '🛬 Land in'} ${e.place.city} (${e.place.code}) · ${e.flight}`;
+    li.append(time, what);
+    if (e.place.tz !== HOME_TZ) {
+      const local = document.createElement('small');
+      const otherDay = zonedKey(e.at, e.place.tz) !== day
+        ? ` on ${e.at.toLocaleDateString('en-GB', { timeZone: e.place.tz, weekday: 'short', day: 'numeric' })}`
+        : '';
+      local.textContent = `${zonedTime(e.at, e.place.tz)}${otherDay} ${e.place.city} time`;
+      li.append(local);
+    }
+    rows.append(li);
+  }
 
   const done = new Set(state.data.done[day] || []);
   const list = $('tasks');
