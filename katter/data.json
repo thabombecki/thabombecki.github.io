@@ -121,16 +121,12 @@
   ],
   "done": {
     "2026-10-15": [
-      "bin-out",
       "bin-in",
-      "wet-food",
-      "open-up"
+      "wet-food"
     ]
   },
   "times": {
-    "2026-10-15": {
-      "open-up": "2026-10-14T14:43:01.232Z"
-    }
+    "2026-10-15": {}
   },
   "diary": {
     "2026-10-15": "Die katte was poese"
