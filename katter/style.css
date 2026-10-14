@@ -206,17 +206,19 @@ dialog[open] { animation: pop .3s cubic-bezier(.3, 1.5, .5, 1); }
     padding-bottom: max(18px, env(safe-area-inset-bottom));
   }
 }
-/* Zero-height sticky bar keeps the close button pinned while the sheet scrolls. */
-.sheet-bar {
-  position: sticky; top: 0; z-index: 3; height: 0;
-  display: flex; justify-content: flex-end; margin-right: -6px;
+.sheet { padding-top: 0; }
+/* The header stays pinned while the jobs and photos scroll underneath. */
+.sheet-head {
+  position: sticky; top: 0; z-index: 3;
+  display: flex; gap: 14px; align-items: center;
+  margin: 0 -18px 14px; padding: 18px 62px 12px 18px;
+  background: var(--card); border-bottom: 2px dashed var(--soft-line);
 }
 .close {
-  flex: none; margin-top: -6px; width: 36px; height: 36px;
+  position: absolute; top: 14px; right: 14px; width: 36px; height: 36px;
   border: 2px solid var(--line); border-radius: 50%; background: var(--card); color: var(--ink);
   font-size: 1.3rem; line-height: 1; cursor: pointer; box-shadow: 2px 2px 0 var(--line);
 }
-.sheet-head { display: flex; gap: 14px; align-items: center; padding-right: 44px; margin-bottom: 14px; }
 .day-date {
   flex: none; width: 62px; height: 62px; border-radius: 16px; border: 2px solid var(--line);
   background: var(--purple); color: var(--on-accent); display: grid; place-items: center; text-align: center;
