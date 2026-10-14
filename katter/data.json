@@ -126,11 +126,14 @@
       "ants",
       "bin-out",
       "bin-in",
-      "wet-food"
+      "wet-food",
+      "open-up"
     ]
   },
   "times": {
-    "2026-10-15": {}
+    "2026-10-15": {
+      "open-up": "2026-10-14T14:43:01.232Z"
+    }
   },
   "diary": {
     "2026-10-15": "Die katte was poese"
