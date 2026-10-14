@@ -1,22 +1,22 @@
 :root {
-  /* palette taken from the logo: sunny yellow, turquoise, coral pink, black outlines */
-  --bg: #f5e33b;
+  /* Japan palette: washi cream, hinomaru red, ai-iro indigo, sakura pink */
+  --bg: #fff4ea;
   --card: #ffffff;
-  --ink: #161616;
-  --muted: #6b6551;
-  --line: #161616;
-  --soft-line: #ece6c8;
-  --orange: #ff6b81;        /* coral: primary accent */
-  --orange-soft: #ffe0e5;
-  --purple: #19e3c4;        /* turquoise: secondary accent */
-  --purple-soft: #d4fbf4;
-  --mint: #19e3c4;          /* done */
-  --mint-soft: #d4fbf4;
-  --pink: #ff6b81;
-  --yellow: #f5e33b;
-  --on-accent: #161616;
-  --danger: #e0344f;
-  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='%23ffffff' fill-opacity='.35'%3E%3Cpath d='M20 40l30-8-12 30z'/%3E%3Cpath d='M150 20l40 6-28 24z'/%3E%3Cpath d='M90 120l26 22-34 6z'/%3E%3Cpath d='M180 150l20 34-36-6z'/%3E%3Cpath d='M30 170l10-30 22 24z'/%3E%3C/g%3E%3C/svg%3E");
+  --ink: #1f1a1c;
+  --muted: #7a6266;
+  --line: #1f1a1c;
+  --soft-line: #f1ddd6;
+  --orange: #e23b45;        /* hinomaru red: primary accent */
+  --orange-soft: #ffe1e3;
+  --purple: #2d3f7a;        /* indigo: secondary accent */
+  --purple-soft: #e3e8f7;
+  --mint: #f6a9bb;          /* sakura: done */
+  --mint-soft: #ffe8ee;
+  --pink: #f6a9bb;
+  --on-accent: #ffffff;
+  --danger: #c62835;
+  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cg fill='%23f6a9bb' fill-opacity='.45'%3E%3Cellipse cx='40' cy='35' rx='5.0' ry='7.2' transform='rotate%280 40 44%29'/%3E%3Cellipse cx='40' cy='35' rx='5.0' ry='7.2' transform='rotate%2872 40 44%29'/%3E%3Cellipse cx='40' cy='35' rx='5.0' ry='7.2' transform='rotate%28144 40 44%29'/%3E%3Cellipse cx='40' cy='35' rx='5.0' ry='7.2' transform='rotate%28216 40 44%29'/%3E%3Cellipse cx='40' cy='35' rx='5.0' ry='7.2' transform='rotate%28288 40 44%29'/%3E%3Cellipse cx='132' cy='121' rx='3.9' ry='5.6' transform='rotate%2830 132 128%29'/%3E%3Cellipse cx='132' cy='121' rx='3.9' ry='5.6' transform='rotate%28102 132 128%29'/%3E%3Cellipse cx='132' cy='121' rx='3.9' ry='5.6' transform='rotate%28174 132 128%29'/%3E%3Cellipse cx='132' cy='121' rx='3.9' ry='5.6' transform='rotate%28246 132 128%29'/%3E%3Cellipse cx='132' cy='121' rx='3.9' ry='5.6' transform='rotate%28318 132 128%29'/%3E%3Cellipse cx='120' cy='34' rx='3.5' ry='6' transform='rotate%2840 120 34%29'/%3E%3Cellipse cx='60' cy='140' rx='3' ry='5.5' transform='rotate%28-30 60 140%29'/%3E%3Cellipse cx='160' cy='70' rx='3' ry='5' transform='rotate%2870 160 70%29'/%3E%3C/g%3E%3C/svg%3E");
+  --cat-glow: transparent;
   --shadow: 3px 3px 0 var(--line);
   --radius: 18px;
   color-scheme: light;
@@ -24,23 +24,23 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0d2624;
-    --card: #143633;
-    --ink: #fffbe0;
-    --muted: #a8c2bc;
-    --line: #050f0e;
-    --soft-line: #24504b;
-    --orange: #ff7a8e;
-    --orange-soft: #4a2229;
-    --purple: #22e8ca;
-    --purple-soft: #12443e;
-    --mint: #22e8ca;
-    --mint-soft: #12443e;
-    --pink: #ff7a8e;
-    --yellow: #f5e33b;
-    --on-accent: #161616;
-    --danger: #ff6b7f;
-    --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cg fill='%23f5e33b' fill-opacity='.07'%3E%3Cpath d='M20 40l30-8-12 30z'/%3E%3Cpath d='M150 20l40 6-28 24z'/%3E%3Cpath d='M90 120l26 22-34 6z'/%3E%3Cpath d='M180 150l20 34-36-6z'/%3E%3Cpath d='M30 170l10-30 22 24z'/%3E%3C/g%3E%3C/svg%3E");
+    --bg: #151a2e;
+    --card: #1f2640;
+    --ink: #fbeff2;
+    --muted: #aab0c8;
+    --line: #070912;
+    --soft-line: #333c5c;
+    --orange: #ff5a64;
+    --orange-soft: #4a1f28;
+    --purple: #4a5fb0;
+    --purple-soft: #2a3358;
+    --mint: #f6a9bb;
+    --mint-soft: #47303d;
+    --pink: #f6a9bb;
+    --on-accent: #ffffff;
+    --danger: #ff6b74;
+    --cat-glow: rgba(255, 255, 255, .7);
+    --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cg fill='%23f6a9bb' fill-opacity='.10'%3E%3Cellipse cx='40' cy='35' rx='5.0' ry='7.2' transform='rotate%280 40 44%29'/%3E%3Cellipse cx='40' cy='35' rx='5.0' ry='7.2' transform='rotate%2872 40 44%29'/%3E%3Cellipse cx='40' cy='35' rx='5.0' ry='7.2' transform='rotate%28144 40 44%29'/%3E%3Cellipse cx='40' cy='35' rx='5.0' ry='7.2' transform='rotate%28216 40 44%29'/%3E%3Cellipse cx='40' cy='35' rx='5.0' ry='7.2' transform='rotate%28288 40 44%29'/%3E%3Cellipse cx='132' cy='121' rx='3.9' ry='5.6' transform='rotate%2830 132 128%29'/%3E%3Cellipse cx='132' cy='121' rx='3.9' ry='5.6' transform='rotate%28102 132 128%29'/%3E%3Cellipse cx='132' cy='121' rx='3.9' ry='5.6' transform='rotate%28174 132 128%29'/%3E%3Cellipse cx='132' cy='121' rx='3.9' ry='5.6' transform='rotate%28246 132 128%29'/%3E%3Cellipse cx='132' cy='121' rx='3.9' ry='5.6' transform='rotate%28318 132 128%29'/%3E%3Cellipse cx='120' cy='34' rx='3.5' ry='6' transform='rotate%2840 120 34%29'/%3E%3Cellipse cx='60' cy='140' rx='3' ry='5.5' transform='rotate%28-30 60 140%29'/%3E%3Cellipse cx='160' cy='70' rx='3' ry='5' transform='rotate%2870 160 70%29'/%3E%3C/g%3E%3C/svg%3E");
     color-scheme: dark;
   }
 }
@@ -53,7 +53,7 @@ body {
   color: var(--ink);
   background-color: var(--bg);
   background-image: var(--pattern);
-  background-size: 220px 220px;
+  background-size: 180px 180px;
   font: 16px/1.5 "Nunito", system-ui, -apple-system, sans-serif;
   min-height: 100vh;
 }
@@ -66,22 +66,25 @@ main { max-width: 600px; margin: 0 auto; padding: 0 16px 40px; }
 /* ---------- hero ---------- */
 
 .hero {
-  display: flex; align-items: center; gap: 16px;
-  max-width: 600px; margin: 0 auto; padding: 24px 16px 6px;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px;
+  max-width: 600px; margin: 0 auto; padding: 20px 16px 4px;
 }
-.logo {
-  flex: none; width: clamp(92px, 27vw, 140px); aspect-ratio: 1; border-radius: 24px;
-  border: 3px solid var(--line); box-shadow: 4px 4px 0 var(--line); rotate: -4deg;
-  background: var(--yellow);
+.banner {
+  display: block; width: 100%; height: auto; aspect-ratio: 680 / 232;
+  border: 3px solid var(--line); border-radius: 22px; box-shadow: 5px 5px 0 var(--line);
+  background: #ffe2cf; rotate: -1deg;
 }
-.logo:hover { animation: wiggle .5s ease-in-out; }
+.banner:hover { animation: wiggle .5s ease-in-out; }
 @keyframes wiggle {
-  0%, 100% { rotate: -4deg; }
-  25% { rotate: 4deg; }
-  75% { rotate: -8deg; }
+  0%, 100% { rotate: -1deg; }
+  25% { rotate: 1.5deg; }
+  75% { rotate: -2.5deg; }
 }
 .hero-copy { min-width: 0; }
-h1 { margin: 0; font-size: clamp(1.75rem, 7.5vw, 2.7rem); line-height: 1.05; letter-spacing: .5px; }
+.kicker {
+  margin: 0 0 4px; color: var(--orange); font-weight: 800; font-size: .9rem; letter-spacing: .5px;
+}
+h1 { margin: 0; font-size: clamp(2rem, 9vw, 2.9rem); line-height: 1.05; letter-spacing: .5px; }
 .amp { color: var(--orange); -webkit-text-stroke: 1px var(--line); }
 .tagline { margin: 6px 0 0; color: var(--ink); opacity: .75; font-weight: 700; font-size: .95rem; line-height: 1.3; }
 .countdown {
@@ -90,7 +93,7 @@ h1 { margin: 0; font-size: clamp(1.75rem, 7.5vw, 2.7rem); line-height: 1.05; let
   border: 2px solid var(--line); box-shadow: var(--shadow);
 }
 .countdown:empty { display: none; }
-.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }
+.hero-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 8px; }
 .hero-actions:not(:has(:not([hidden]))) { display: none; }
 .badge {
   background: var(--orange-soft); color: var(--ink); border: 2px solid var(--line);
@@ -118,12 +121,12 @@ h1 { margin: 0; font-size: clamp(1.75rem, 7.5vw, 2.7rem); line-height: 1.05; let
 }
 .track-fill {
   height: 100%; width: 0; border-radius: 99px;
-  background: linear-gradient(90deg, var(--purple), var(--yellow), var(--orange));
+  background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange));
   transition: width .6s cubic-bezier(.3, 1.5, .5, 1);
 }
 .track-cat {
   position: absolute; top: 50%; left: 0; font-size: 1.6rem;
-  transform: translate(-50%, -62%) scaleX(-1); transition: left .6s cubic-bezier(.3, 1.5, .5, 1);
+  transform: translate(-50%, -62%) scaleX(-1); filter: drop-shadow(0 0 2px var(--cat-glow)); transition: left .6s cubic-bezier(.3, 1.5, .5, 1);
 }
 
 /* ---------- calendar ---------- */
@@ -160,17 +163,21 @@ h1 { margin: 0; font-size: clamp(1.75rem, 7.5vw, 2.7rem); line-height: 1.05; let
 .cell.missed .num { color: var(--danger); }
 
 .cell.done { background: var(--mint-soft); }
-.cell.done .num { opacity: .45; text-decoration: line-through 2px; }
+.cell.done .num {
+  position: absolute; top: 4px; left: 6px; font-size: .68rem; opacity: .65;
+}
 .cell.done .dots { display: none; }
 .cell.done::after {
-  content: "🐾"; position: absolute; inset: 0; display: grid; place-items: center;
-  font-size: clamp(1.4rem, 6.5vw, 2rem); rotate: -18deg;
-  filter: drop-shadow(1px 1px 0 var(--line));
+  content: "済"; position: absolute; top: 50%; left: 50%; translate: -50% -50%;
+  width: 64%; aspect-ratio: 1; display: grid; place-items: center;
+  border: 2.5px solid var(--orange); border-radius: 50%; color: var(--orange);
+  font: 700 clamp(.95rem, 4.4vw, 1.35rem)/1 "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  background: var(--card); rotate: -12deg; opacity: .95;
 }
 .cell.stamp::after { animation: stamp .45s cubic-bezier(.3, 1.6, .5, 1); }
 @keyframes stamp {
   0% { scale: 3; opacity: 0; rotate: -40deg; }
-  100% { scale: 1; opacity: 1; rotate: -18deg; }
+  100% { scale: 1; opacity: .95; rotate: -12deg; }
 }
 
 .hint { text-align: center; color: var(--muted); font-size: .85rem; margin: 14px 0 0; font-weight: 600; }
@@ -183,7 +190,7 @@ dialog {
   box-shadow: 6px 6px 0 var(--line);
   max-width: calc(100% - 32px);
 }
-dialog::backdrop { background: rgba(8, 38, 35, .55); backdrop-filter: blur(3px); }
+dialog::backdrop { background: rgba(20, 24, 48, .55); backdrop-filter: blur(3px); }
 dialog[open] { animation: pop .3s cubic-bezier(.3, 1.5, .5, 1); }
 @keyframes pop {
   from { opacity: 0; transform: translateY(30px) scale(.96); }

@@ -219,9 +219,9 @@ function isDone(day) {
 }
 
 const MOODS = {
-  none: ['Batman is giving you the hungry stare 😾', 'Harvey has knocked something off a shelf to get your attention 🙀', 'Two hungry boys, zero patience 😼'],
+  none: ['Batman is giving you the hungry stare 😾', 'Harvey has knocked something off a shelf to get your attention 🙀', 'Two hungry boys dreaming of sushi 🍣'],
   some: ['Harvey says: keep going, human 😺', 'Batman is cautiously optimistic 🐈‍⬛', 'Getting there, the purring has begun 😸'],
-  all: ['Purr-fect day! Both boys approve 😻', 'Batman and Harvey rate you 10/10 🏆', 'Mission accomplished. Nap time 💤'],
+  all: ['Purr-fect day! Both boys approve 😻', 'Batman and Harvey rate you 10/10 🏆', 'Sugoi! Mission accomplished. Nap time 💤'],
 };
 
 function moodFor(day) {
@@ -415,12 +415,12 @@ function celebrate(day) {
   confettiCanvas.el.hidePopover?.();
   confettiCanvas.el.showPopover?.();
   const shapes = confetti.shapeFromText
-    ? ['🐾', '🐟', '💛'].map((text) => confetti.shapeFromText({ text, scalar: 2 }))
+    ? ['🌸', '🍣', '🐾'].map((text) => confetti.shapeFromText({ text, scalar: 2 }))
     : undefined;
   const opts = { particleCount: 70, spread: 80, startVelocity: 40, scalar: 2, origin: { y: 0.7 } };
   confettiCanvas.fire({ ...opts, shapes, angle: 60, origin: { x: 0, y: 0.75 } });
   confettiCanvas.fire({ ...opts, shapes, angle: 120, origin: { x: 1, y: 0.75 } });
-  confettiCanvas.fire({ particleCount: 60, spread: 100, origin: { y: 0.6 }, colors: ['#f5e33b', '#19e3c4', '#ff6b81', '#ffffff'] });
+  confettiCanvas.fire({ particleCount: 60, spread: 100, origin: { y: 0.6 }, colors: ['#e23b45', '#f6a9bb', '#2d3f7a', '#ffffff'] });
   setTimeout(() => confettiCanvas.el.hidePopover?.(), 5000);
 }
 
