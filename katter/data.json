@@ -125,7 +125,9 @@
       "open-up",
       "dry-food",
       "ants",
-      "bin-out"
+      "bin-out",
+      "wet-food",
+      "bin-in"
     ]
   },
   "photos": {}
