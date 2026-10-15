@@ -156,12 +156,7 @@ h1 { margin: 0; font-size: clamp(2rem, 9vw, 2.9rem); line-height: 1.05; letter-s
 .cell .mini span { display: block; height: 100%; background: var(--orange); border-radius: 99px; }
 .cell .cam { position: absolute; top: -8px; right: -6px; font-size: .9rem; rotate: 12deg; }
 
-.cell.today { background: var(--orange-soft); }
-.cell.today::before {
-  content: "today"; position: absolute; top: -9px; left: 50%; translate: -50% 0; z-index: 1;
-  background: var(--orange); color: var(--on-accent); border: 2px solid var(--line); border-radius: 99px;
-  font-size: .55rem; font-weight: 800; padding: 0 5px; line-height: 1.4; white-space: nowrap;
-}
+.cell.today { background: var(--orange-soft); border-color: var(--orange); box-shadow: 2px 2px 0 var(--orange); }
 .cell.missed .num { color: var(--danger); }
 
 .cell.done { background: var(--mint-soft); }
