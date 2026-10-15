@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
-  <link rel="stylesheet" href="style.css?v=202610151641">
+  <link rel="stylesheet" href="style.css?v=202610151855">
 </head>
 <body>
   <header class="hero">
@@ -33,7 +33,6 @@
         <span id="mode-badge" class="badge" hidden></span>
         <span id="sync-badge" class="badge sync" hidden></span>
         <button id="lock-btn" class="link-btn" hidden>Lock</button>
-        <button id="sound-btn" class="icon-btn" type="button" aria-label="Mute the meow">🔊</button>
       </div>
     </div>
   </header>
@@ -82,7 +81,7 @@
       <ul id="task-editor" class="task-editor"></ul>
       <form id="add-task-form" class="add-task">
         <select id="new-task-when" aria-label="Morning or evening">
-          <option value="am">🌅 AM</option>
+          <option value="am">☀️ AM</option>
           <option value="pm">🌙 PM</option>
         </select>
         <input id="new-task" type="text" placeholder="e.g. Brush Harvey" maxlength="60" required>
@@ -102,6 +101,11 @@
         <p id="day-mood" class="mood"></p>
       </div>
     </div>
+
+    <section id="moods" class="moods" hidden>
+      <h3>😺 Mood check</h3>
+      <div id="mood-rows"></div>
+    </section>
 
     <section id="travel" class="travel" hidden>
       <h3>✈️ Owners' travel <small>(SA time)</small></h3>
@@ -172,6 +176,6 @@
   <div id="toast" class="toast" hidden></div>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-  <script src="app.js?v=202610151641"></script>
+  <script src="app.js?v=202610151855"></script>
 </body>
 </html>

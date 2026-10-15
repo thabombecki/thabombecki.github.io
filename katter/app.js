@@ -16,7 +16,6 @@ const RAW = `https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${
 const TOKEN_KEY = 'katter-token';
 const PREVIEW_KEY = 'katter-preview';
 const OUTBOX_KEY = 'katter-outbox';
-const SOUND_KEY = 'katter-sound';
 
 const HOME_TZ = 'Africa/Johannesburg';
 const AWAY_TZ = 'Asia/Tokyo';
@@ -31,6 +30,15 @@ const TRIP = [
   { flight: 'EK312', from: DXB, to: HND, dep: '2026-10-16T03:40:00Z', arr: '2026-10-16T13:20:00Z' },
   { flight: 'EK313', from: HND, to: DXB, dep: '2026-10-29T15:05:00Z', arr: '2026-10-30T02:55:00Z' },
   { flight: 'EK770', from: DXB, to: CPT, dep: '2026-10-30T05:10:00Z', arr: '2026-10-30T14:45:00Z' },
+];
+
+const MOODS_LIST = [
+  { emoji: '😻', label: 'Loved-up' },
+  { emoji: '😺', label: 'Happy' },
+  { emoji: '😼', label: 'Sassy' },
+  { emoji: '😴', label: 'Sleepy' },
+  { emoji: '🙀', label: 'Chaotic' },
+  { emoji: '😾', label: 'Grumpy' },
 ];
 
 const DEFAULT_CATS = [
@@ -117,6 +125,7 @@ function normalise(d) {
     diary: d.diary || {},
     photos: d.photos || {},
     captions: d.captions || {},
+    moods: d.moods || {},
     cats: d.cats || structuredClone(DEFAULT_CATS),
   };
 }
@@ -287,6 +296,12 @@ const setDiary = defineOp('setDiary', (day, text) => (d) => {
 const setCaption = defineOp('setCaption', (path, text) => (d) => {
   if (text) d.captions[path] = text;
   else delete d.captions[path];
+});
+const setMood = defineOp('setMood', (day, catId, mood) => (d) => {
+  d.moods[day] = d.moods[day] || {};
+  if (mood) d.moods[day][catId] = mood;
+  else delete d.moods[day][catId];
+  if (!Object.keys(d.moods[day]).length) delete d.moods[day];
 });
 const setCat = defineOp('setCat', (id, fields) => (d) => {
   const cat = d.cats.find((c) => c.id === id);
@@ -655,7 +670,7 @@ function render() {
   for (const t of state.data.tasks) {
     const li = document.createElement('li');
     const span = document.createElement('span');
-    span.textContent = `${t.when === 'pm' ? '🌙' : '🌅'} ${t.label}`;
+    span.textContent = `${t.when === 'pm' ? '🌙' : '☀️'} ${t.label}`;
     if (t.days) {
       const when = document.createElement('small');
       when.className = 'only';
@@ -705,6 +720,8 @@ function renderDay() {
   $('day-mood').textContent = `Day ${DAYS.indexOf(date) + 1} · ${moodFor(day)}`;
   $('add-photo').hidden = !editing;
 
+  renderMoods(day, editing);
+
   const travel = editing ? travelFor(day) : [];
   $('travel').hidden = !travel.length;
   const rows = $('travel-list');
@@ -731,7 +748,7 @@ function renderDay() {
   const done = new Set(state.data.done[day] || []);
   const list = $('tasks');
   list.replaceChildren();
-  for (const [when, heading] of [['am', '🌅 Morning'], ['pm', '🌙 Evening']]) {
+  for (const [when, heading] of [['am', '☀️ Morning'], ['pm', '🌙 Evening']]) {
     const tasks = tasksFor(day).filter((t) => (t.when || 'am') === when);
     const notes = notesFor(day).filter((n) => (n.when || 'am') === when);
     if (!tasks.length && !notes.length) continue;
@@ -809,6 +826,54 @@ function renderDay() {
   });
 }
 
+// Each cat's mood for the day: the sitter taps one, everyone sees it.
+function renderMoods(day, editing) {
+  const moods = state.data.moods[day] || {};
+  $('moods').hidden = !editing && !Object.keys(moods).length;
+  const box = $('mood-rows');
+  box.replaceChildren();
+  for (const cat of state.data.cats) {
+    const row = document.createElement('div');
+    row.className = 'mood-row';
+    const who = document.createElement('div');
+    who.className = 'mood-cat';
+    const img = document.createElement('img');
+    img.src = cat.avatar;
+    img.alt = '';
+    const name = document.createElement('span');
+    name.textContent = cat.name;
+    who.append(img, name);
+    row.append(who);
+
+    const current = MOODS_LIST.find((m) => m.emoji === moods[cat.id]);
+    if (editing) {
+      const picks = document.createElement('div');
+      picks.className = 'mood-picks';
+      for (const m of MOODS_LIST) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = m === current ? 'mood-pick on' : 'mood-pick';
+        b.textContent = m.emoji;
+        b.title = m.label;
+        b.setAttribute('aria-label', `${cat.name}: ${m.label}`);
+        b.setAttribute('aria-pressed', String(m === current));
+        b.addEventListener('click', () => {
+          const next = m === current ? null : m.emoji; // tap again to clear
+          change(setMood(day, cat.id, next), `${cat.name} is ${next ? m.label.toLowerCase() : 'unrated'} (${day})`);
+        });
+        picks.append(b);
+      }
+      row.append(picks);
+    } else {
+      const shown = document.createElement('span');
+      shown.className = 'mood-shown';
+      shown.textContent = current ? `${current.emoji} ${current.label}` : '·';
+      row.append(shown);
+    }
+    box.append(row);
+  }
+}
+
 function toggleTask(day, task, on) {
   const wasDone = isDone(day);
   change(setDone(day, task.id, on, new Date().toISOString()), `${on ? 'Done' : 'Undo'}: ${task.label} (${day})`);
@@ -817,18 +882,10 @@ function toggleTask(day, task, on) {
 
 // ---------- celebration ----------
 
-const soundOn = () => { try { return localStorage.getItem(SOUND_KEY) !== 'off'; } catch { return true; } };
-
-function renderSoundButton() {
-  $('sound-btn').textContent = soundOn() ? '🔊' : '🔇';
-  $('sound-btn').setAttribute('aria-label', soundOn() ? 'Mute the meow' : 'Unmute the meow');
-}
-
 // A synthesised "mee-ow": two detuned saw waves whose pitch rises then falls, through a
 // band-pass filter that sweeps like a mouth opening (ee, ah, ow). No sound files needed.
 let audio;
 function meow() {
-  if (!soundOn()) return;
   const Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) return;
   audio = audio || new Ctx();
@@ -1084,11 +1141,6 @@ function wire() {
     toast('Editing unlocked on this device 🔓');
   });
 
-  $('sound-btn').addEventListener('click', () => {
-    try { localStorage.setItem(SOUND_KEY, soundOn() ? 'off' : 'on'); } catch { /* ignore */ }
-    renderSoundButton();
-    if (soundOn()) meow();
-  });
   window.addEventListener('online', () => { if (queue.length) flush(); loadWeather(); });
 
   // Secret login: five quick taps on the cat banner open the unlock box.
@@ -1124,7 +1176,6 @@ async function init() {
   }
   if (!isPreview()) restoreOutbox();
   render();
-  renderSoundButton();
   if (queue.length) flush();
 
   tickClocks();
