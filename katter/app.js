@@ -15,6 +15,8 @@ const API = `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}`;
 const RAW = `https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/${CONFIG.dir}/`;
 const TOKEN_KEY = 'katter-token';
 const PREVIEW_KEY = 'katter-preview';
+const OUTBOX_KEY = 'katter-outbox';
+const SOUND_KEY = 'katter-sound';
 
 const HOME_TZ = 'Africa/Johannesburg';
 const AWAY_TZ = 'Asia/Tokyo';
@@ -65,7 +67,7 @@ function key(d) {
 function zonedKey(date, timeZone) {
   return new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
 }
-const TODAY = zonedKey(new Date(), HOME_TZ);
+let TODAY = zonedKey(new Date(), HOME_TZ);
 
 function zonedTime(date, timeZone) {
   return new Intl.DateTimeFormat('en-GB', { timeZone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(date);
@@ -165,6 +167,31 @@ async function deleteFile(path, message) {
 const queue = [];
 let saving = false;
 
+function saveOutbox() {
+  try {
+    if (queue.length) localStorage.setItem(OUTBOX_KEY, JSON.stringify(queue.map((q) => ({ op: q.mutator.op, message: q.message }))));
+    else localStorage.removeItem(OUTBOX_KEY);
+  } catch { /* storage unavailable: changes stay in memory */ }
+  const n = queue.length;
+  $('sync-badge').hidden = n === 0;
+  $('sync-badge').textContent = `⏳ ${n} change${n === 1 ? '' : 's'} waiting to sync`;
+}
+
+// Changes made offline (or before a save finished) come back after a reload.
+function restoreOutbox() {
+  let saved = [];
+  try { saved = JSON.parse(localStorage.getItem(OUTBOX_KEY) || '[]'); } catch { /* ignore */ }
+  for (const { op, message } of saved) {
+    if (!OPS[op?.name]) continue;
+    const mutator = fromOp(op);
+    mutator(state.data);
+    queue.push({ mutator, message });
+  }
+  saveOutbox();
+}
+
+const isNetworkError = (err) => err instanceof TypeError || !navigator.onLine;
+
 function change(mutator, message) {
   mutator(state.data);
   render();
@@ -175,6 +202,7 @@ function change(mutator, message) {
     return;
   }
   queue.push({ mutator, message });
+  saveOutbox();
   flush();
 }
 
@@ -186,7 +214,16 @@ async function flush() {
     const message = batch.length === 1 ? batch[0].message : `Pet sitting: ${batch.length} updates`;
     try {
       await saveData(batch, message);
+      saveOutbox();
     } catch (err) {
+      if (isNetworkError(err)) {
+        // Keep the changes on the phone and try again when the connection is back.
+        queue.unshift(...batch);
+        saveOutbox();
+        toast('📴 Offline: saved on this phone, will sync when you reconnect');
+        break;
+      }
+      saveOutbox();
       toast(err.message, true);
       try { await load(); } catch { /* keep what we have */ }
       render();
@@ -225,42 +262,51 @@ async function saveError(res) {
 }
 
 // ---------- mutators ----------
+// Each mutator remembers its name and arguments, so unsaved changes can be stored
+// on the phone while offline and replayed later.
 
-const setDone = (day, id, on, at = new Date().toISOString()) => (d) => {
+const OPS = {};
+function defineOp(name, factory) {
+  OPS[name] = factory;
+  return (...args) => Object.assign(factory(...args), { op: { name, args } });
+}
+const fromOp = ({ name, args }) => defineOp(name, OPS[name])(...args);
+
+const setDone = defineOp('setDone', (day, id, on, at) => (d) => {
   const list = new Set(d.done[day] || []);
   on ? list.add(id) : list.delete(id);
   d.done[day] = [...list];
   d.times[day] = d.times[day] || {};
   if (on) d.times[day][id] = d.times[day][id] || at;
   else delete d.times[day][id];
-};
-const setDiary = (day, text) => (d) => {
+});
+const setDiary = defineOp('setDiary', (day, text) => (d) => {
   if (text) d.diary[day] = text;
   else delete d.diary[day];
-};
-const setCaption = (path, text) => (d) => {
+});
+const setCaption = defineOp('setCaption', (path, text) => (d) => {
   if (text) d.captions[path] = text;
   else delete d.captions[path];
-};
-const setCat = (id, fields) => (d) => {
+});
+const setCat = defineOp('setCat', (id, fields) => (d) => {
   const cat = d.cats.find((c) => c.id === id);
   if (cat) Object.assign(cat, structuredClone(fields));
-};
-const addPhoto = (day, path) => (d) => {
+});
+const addPhoto = defineOp('addPhoto', (day, path) => (d) => {
   const list = d.photos[day] || [];
   if (!list.includes(path)) d.photos[day] = [...list, path];
-};
-const removePhoto = (day, path) => (d) => {
+});
+const removePhoto = defineOp('removePhoto', (day, path) => (d) => {
   d.photos[day] = (d.photos[day] || []).filter((p) => p !== path);
   if (!d.photos[day].length) delete d.photos[day];
   delete d.captions[path];
-};
-const addTask = (task) => (d) => {
+});
+const addTask = defineOp('addTask', (task) => (d) => {
   if (!d.tasks.some((t) => t.id === task.id)) d.tasks.push(task);
-};
-const removeTask = (id) => (d) => {
+});
+const removeTask = defineOp('removeTask', (id) => (d) => {
   d.tasks = d.tasks.filter((t) => t.id !== id);
-};
+});
 
 // ---------- rendering ----------
 
@@ -496,12 +542,46 @@ function renderCats() {
   }
 }
 
+// Live weather for home and away, from Open-Meteo (free, no key). Refreshed every 30 minutes.
+const WEATHER_URL = 'https://api.open-meteo.com/v1/forecast?latitude=-33.92,35.68&longitude=18.42,139.69&current=temperature_2m,weather_code';
+const weather = { home: null, away: null };
+
+function weatherEmoji(code) {
+  if (code === 0) return '☀️';
+  if (code <= 2) return '⛅';
+  if (code === 3) return '☁️';
+  if (code <= 48) return '🌫️';
+  if (code <= 67 || (code >= 80 && code <= 82)) return '🌧️';
+  if (code <= 77 || code === 85 || code === 86) return '❄️';
+  return '⛈️';
+}
+
+async function loadWeather() {
+  try {
+    const res = await fetch(WEATHER_URL);
+    if (!res.ok) return;
+    const [home, away] = await res.json();
+    const fmt = (w) => `${weatherEmoji(w.current.weather_code)} ${Math.round(w.current.temperature_2m)}°`;
+    weather.home = fmt(home);
+    weather.away = fmt(away);
+    tickClocks();
+  } catch { /* offline: just show the clocks */ }
+}
+
 function tickClocks() {
   const now = new Date();
   const away = zonedTime(now, AWAY_TZ);
   const hour = Number(away.slice(0, 2));
   const night = hour >= 22 || hour < 7;
-  $('clocks').textContent = `🇯🇵 ${away}${night ? ' 😴' : ''} · 🇿🇦 ${zonedTime(now, HOME_TZ)}`;
+  const w = (x) => (x ? ` ${x}` : '');
+  $('clocks').textContent = `🇯🇵 ${away}${night ? ' 😴' : ''}${w(weather.away)} · 🇿🇦 ${zonedTime(now, HOME_TZ)}${w(weather.home)}`;
+
+  // Roll over to the new day at midnight (SA time) without needing a refresh.
+  const today = zonedKey(now, HOME_TZ);
+  if (today !== TODAY) {
+    TODAY = today;
+    render();
+  }
   $('clocks').title = night ? "It's night in Japan" : '';
   const status = canEdit() ? tripStatus(now) : null;
   $('trip-status').hidden = !status;
@@ -731,15 +811,58 @@ function renderDay() {
 
 function toggleTask(day, task, on) {
   const wasDone = isDone(day);
-  change(setDone(day, task.id, on), `${on ? 'Done' : 'Undo'}: ${task.label} (${day})`);
+  change(setDone(day, task.id, on, new Date().toISOString()), `${on ? 'Done' : 'Undo'}: ${task.label} (${day})`);
   if (!wasDone && isDone(day)) celebrate(day);
 }
 
 // ---------- celebration ----------
 
+const soundOn = () => { try { return localStorage.getItem(SOUND_KEY) !== 'off'; } catch { return true; } };
+
+function renderSoundButton() {
+  $('sound-btn').textContent = soundOn() ? '🔊' : '🔇';
+  $('sound-btn').setAttribute('aria-label', soundOn() ? 'Mute the meow' : 'Unmute the meow');
+}
+
+// A synthesised "mee-ow": two detuned saw waves whose pitch rises then falls, through a
+// band-pass filter that sweeps like a mouth opening (ee, ah, ow). No sound files needed.
+let audio;
+function meow() {
+  if (!soundOn()) return;
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if (!Ctx) return;
+  audio = audio || new Ctx();
+  const t = audio.currentTime + 0.02;
+  const out = audio.createGain();
+  out.gain.setValueAtTime(0.0001, t);
+  out.gain.exponentialRampToValueAtTime(0.35, t + 0.08);
+  out.gain.setValueAtTime(0.35, t + 0.35);
+  out.gain.exponentialRampToValueAtTime(0.0001, t + 0.75);
+  const filter = audio.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.Q.value = 4;
+  filter.frequency.setValueAtTime(1800, t);
+  filter.frequency.linearRampToValueAtTime(2600, t + 0.18);
+  filter.frequency.linearRampToValueAtTime(900, t + 0.75);
+  filter.connect(out);
+  out.connect(audio.destination);
+  for (const detune of [-8, 8]) {
+    const osc = audio.createOscillator();
+    osc.type = 'sawtooth';
+    osc.detune.value = detune;
+    osc.frequency.setValueAtTime(520, t);
+    osc.frequency.exponentialRampToValueAtTime(820, t + 0.16);
+    osc.frequency.exponentialRampToValueAtTime(430, t + 0.75);
+    osc.connect(filter);
+    osc.start(t);
+    osc.stop(t + 0.8);
+  }
+}
+
 let confettiCanvas;
 function celebrate(day) {
   document.querySelector(`.cell[data-day="${day}"]`)?.classList.add('stamp');
+  meow();
   if (typeof confetti !== 'function') return;
   if (!confettiCanvas) {
     // A popover sits in the top layer, so the confetti shows above the open modal.
@@ -961,6 +1084,13 @@ function wire() {
     toast('Editing unlocked on this device 🔓');
   });
 
+  $('sound-btn').addEventListener('click', () => {
+    try { localStorage.setItem(SOUND_KEY, soundOn() ? 'off' : 'on'); } catch { /* ignore */ }
+    renderSoundButton();
+    if (soundOn()) meow();
+  });
+  window.addEventListener('online', () => { if (queue.length) flush(); loadWeather(); });
+
   // Secret login: five quick taps on the cat banner open the unlock box.
   let taps = 0;
   let tapTimer;
@@ -992,10 +1122,18 @@ async function init() {
   } catch {
     toast("Couldn't load progress.", true);
   }
+  if (!isPreview()) restoreOutbox();
   render();
+  renderSoundButton();
+  if (queue.length) flush();
 
   tickClocks();
   setInterval(tickClocks, 15000);
+  loadWeather();
+  setInterval(loadWeather, 30 * 60 * 1000);
+
+  // Offline support: cache the app so it opens without signal.
+  if ('serviceWorker' in navigator && !PREVIEW) navigator.serviceWorker.register('sw.js').catch(() => {});
 
   const params = new URLSearchParams(location.search);
   if (params.has('edit')) {

@@ -472,3 +472,10 @@ button.polaroid { font: inherit; color: #1f1a1c; text-align: center; display: bl
 .gallery .slideshow-btn { display: flex; width: 100%; margin-bottom: 14px; }
 .album-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .album-grid .thumb { width: auto; height: auto; aspect-ratio: 1; }
+
+.icon-btn {
+  width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--line); background: var(--card);
+  font-size: .95rem; line-height: 1; cursor: pointer; box-shadow: 2px 2px 0 var(--line); padding: 0;
+}
+.icon-btn:active { transform: translate(2px, 2px); box-shadow: none; }
+.badge.sync { background: var(--purple-soft); }
