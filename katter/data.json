@@ -172,7 +172,8 @@
       "water",
       "ants",
       "plants-courtyard",
-      "plants-flat"
+      "plants-flat",
+      "wet-food"
     ]
   },
   "times": {
@@ -228,7 +229,8 @@
       "water": "2026-10-21T06:28:11.588Z",
       "ants": "2026-10-21T06:28:12.269Z",
       "plants-courtyard": "2026-10-21T10:12:14.405Z",
-      "plants-flat": "2026-10-21T10:12:15.826Z"
+      "plants-flat": "2026-10-21T10:12:15.826Z",
+      "wet-food": "2026-10-21T18:46:04.243Z"
     }
   },
   "diary": {
