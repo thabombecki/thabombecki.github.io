@@ -312,7 +312,11 @@
     ]
   },
   "captions": {},
-  "moods": {},
+  "moods": {
+    "2026-10-22": {
+      "batman": "😴"
+    }
+  },
   "cats": [
     {
       "id": "batman",
