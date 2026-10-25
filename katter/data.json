@@ -393,7 +393,9 @@
       "photos/2026-10-25/1792945390328.jpg"
     ]
   },
-  "captions": {},
+  "captions": {
+    "photos/2026-10-25/1792945384114.jpg": "Finally"
+  },
   "moods": {
     "2026-10-22": {
       "batman": "😺",
