@@ -180,8 +180,7 @@
       "water",
       "ants",
       "plants-courtyard",
-      "plants-flat",
-      "wet-food"
+      "plants-flat"
     ],
     "2026-10-23": [
       "open-up",
@@ -284,8 +283,7 @@
       "water": "2026-10-21T06:28:11.588Z",
       "ants": "2026-10-21T06:28:12.269Z",
       "plants-courtyard": "2026-10-21T10:12:14.405Z",
-      "plants-flat": "2026-10-21T10:12:15.826Z",
-      "wet-food": "2026-10-21T18:46:04.243Z"
+      "plants-flat": "2026-10-21T10:12:15.826Z"
     },
     "2026-10-23": {
       "open-up": "2026-10-23T06:37:34.332Z",
