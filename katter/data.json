@@ -227,6 +227,9 @@
       "plants-courtyard",
       "plants-flat",
       "wet-food"
+    ],
+    "2026-10-29": [
+      "open-up"
     ]
   },
   "times": {
@@ -337,6 +340,9 @@
       "plants-courtyard": "2026-10-28T06:33:26.808Z",
       "plants-flat": "2026-10-28T06:33:27.726Z",
       "wet-food": "2026-10-28T17:59:59.330Z"
+    },
+    "2026-10-29": {
+      "open-up": "2026-10-29T09:14:38.857Z"
     }
   },
   "diary": {
