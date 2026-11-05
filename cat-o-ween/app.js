@@ -867,7 +867,7 @@ function celebrate(day) {
   const opts = { particleCount: 70, spread: 80, startVelocity: 40, scalar: 2, origin: { y: 0.7 } };
   confettiCanvas.fire({ ...opts, shapes, angle: 60, origin: { x: 0, y: 0.75 } });
   confettiCanvas.fire({ ...opts, shapes, angle: 120, origin: { x: 1, y: 0.75 } });
-  confettiCanvas.fire({ particleCount: 60, spread: 100, origin: { y: 0.6 }, colors: ['#ff7a1a', '#9b6bff', '#8be05a', '#1a1028'] });
+  confettiCanvas.fire({ particleCount: 60, spread: 100, origin: { y: 0.6 }, colors: ['#ff7a1a', '#5fbf3f', '#b5e655', '#0e1a12'] });
   setTimeout(() => confettiCanvas.el.hidePopover?.(), 5000);
 }
 

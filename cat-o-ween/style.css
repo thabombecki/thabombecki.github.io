@@ -1,22 +1,22 @@
 :root {
-  /* Halloween night: deep purple sky, pumpkin orange, witchy violet, slime green */
-  --bg: #1b1230;
-  --card: #281b44;
-  --ink: #fff3e6;
-  --muted: #bba9dc;
-  --line: #07040d;
-  --soft-line: #3d2d62;
+  /* Halloween: dark forest-green night, pumpkin orange, slime green */
+  --bg: #0e1a12;
+  --card: #172a1c;
+  --ink: #f4fbe9;
+  --muted: #a9c4a2;
+  --line: #040a06;
+  --soft-line: #2a4430;
   --orange: #ff7a1a;        /* pumpkin: primary accent */
-  --orange-soft: #4a2a1e;
-  --purple: #8b5cf6;        /* witchy violet: secondary accent */
-  --purple-soft: #352458;
-  --mint: #8be05a;          /* slime: done */
-  --mint-soft: #233d22;
-  --pink: #b79cff;
+  --orange-soft: #3d2a14;
+  --purple: #5fbf3f;        /* slime green: secondary accent */
+  --purple-soft: #1f3a22;
+  --mint: #b5e655;          /* lime: done */
+  --mint-soft: #2b3d17;
+  --pink: #ffb066;
   --on-accent: #1a0d02;
   --danger: #ff6b74;
-  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg fill='%23b79cff' fill-opacity='.13'%3E%3Cpath d='M30 40c4-6 10-6 12-2 2-4 4-5 6-5 2 0 4 1 6 5 2-4 8-4 12 2-6-1-9 2-10 6-2-3-5-3-8 0-3-3-6-3-8 0-1-4-4-7-10-6z'/%3E%3Cpath d='M130 140c3-4 7-4 9-1 1-3 3-4 4-4s3 1 4 4c2-3 6-3 9 1-4 0-6 1-7 4-2-2-4-2-6 0-2-2-4-2-6 0-1-3-3-4-7-4z'/%3E%3Ccircle cx='160' cy='40' r='2'/%3E%3Ccircle cx='60' cy='120' r='1.6'/%3E%3Ccircle cx='100' cy='80' r='1.2'/%3E%3Ccircle cx='20' cy='170' r='1.8'/%3E%3Ccircle cx='180' cy='100' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
-  --cat-glow: rgba(255, 200, 120, .8);
+  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cg fill='%2399d977' fill-opacity='.11'%3E%3Cpath d='M30 40c4-6 10-6 12-2 2-4 4-5 6-5 2 0 4 1 6 5 2-4 8-4 12 2-6-1-9 2-10 6-2-3-5-3-8 0-3-3-6-3-8 0-1-4-4-7-10-6z'/%3E%3Cpath d='M130 140c3-4 7-4 9-1 1-3 3-4 4-4s3 1 4 4c2-3 6-3 9 1-4 0-6 1-7 4-2-2-4-2-6 0-2-2-4-2-6 0-1-3-3-4-7-4z'/%3E%3Ccircle cx='160' cy='40' r='2'/%3E%3Ccircle cx='60' cy='120' r='1.6'/%3E%3Ccircle cx='100' cy='80' r='1.2'/%3E%3Ccircle cx='20' cy='170' r='1.8'/%3E%3Ccircle cx='180' cy='100' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
+  --cat-glow: rgba(243, 247, 176, .8);
   --shadow: 3px 3px 0 var(--line);
   --radius: 18px;
   color-scheme: dark;
@@ -50,7 +50,7 @@ main { max-width: 600px; margin: 0 auto; padding: 0 16px 40px; }
 .banner {
   display: block; width: 100%; height: auto; aspect-ratio: 680 / 232;
   border: 3px solid var(--line); border-radius: 22px; box-shadow: 5px 5px 0 var(--line);
-  background: #1a1030; rotate: -1deg;
+  background: #0a170d; rotate: -1deg;
   touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .banner:hover { animation: wiggle .5s ease-in-out; }
@@ -124,8 +124,8 @@ h1 { margin: 0; font-size: clamp(2.6rem, 12vw, 3.6rem); line-height: 1.05; lette
   transition: transform .15s, box-shadow .15s;
   -webkit-tap-highlight-color: transparent;
 }
-.cell.pm { background: linear-gradient(160deg, #2c1d52, #170f2b); }
-.cell.am { background: linear-gradient(160deg, #4a2a1e, #2a1a2e); }
+.cell.pm { background: linear-gradient(160deg, #1f3d26, #0d1a10); }
+.cell.am { background: linear-gradient(160deg, #5a3212, #1f2412); }
 .cell:hover { transform: translate(-1px, -2px) rotate(-1.5deg); box-shadow: 4px 5px 0 var(--line); }
 .cell:active { transform: translate(1px, 1px); box-shadow: 0 0 0 var(--line); }
 .shift-emoji { font-size: 2.2rem; line-height: 1; margin-bottom: 4px; }
@@ -139,7 +139,7 @@ h1 { margin: 0; font-size: clamp(2.6rem, 12vw, 3.6rem); line-height: 1.05; lette
 .cell.today { border-color: var(--orange); box-shadow: 3px 3px 0 var(--orange), 0 0 22px rgba(255, 122, 26, .35); }
 .cell.missed .shift-name { color: var(--danger); }
 
-.cell.done { background: linear-gradient(160deg, #23402a, #172617); }
+.cell.done { background: linear-gradient(160deg, #3a5a16, #18260c); }
 .cell.done .mini { display: none; }
 .cell.done::after {
   content: "DONE"; position: absolute; top: 10px; right: 10px;
@@ -166,7 +166,7 @@ dialog {
 /* Freeze the page behind any open pop-up; scrolling inside a pop-up never leaks out to the page. */
 html:has(dialog[open]) { overflow: hidden; }
 dialog { overscroll-behavior: contain; }
-dialog::backdrop { background: rgba(8, 4, 16, .65); backdrop-filter: blur(3px); }
+dialog::backdrop { background: rgba(3, 10, 5, .65); backdrop-filter: blur(3px); }
 dialog[open] { animation: pop .3s cubic-bezier(.3, 1.5, .5, 1); }
 @keyframes pop {
   from { opacity: 0; transform: translateY(30px) scale(.96); }
@@ -263,7 +263,7 @@ dialog[open] { animation: pop .3s cubic-bezier(.3, 1.5, .5, 1); }
 }
 .btn:active { transform: translate(2px, 2px); box-shadow: none; }
 .btn.primary { background: var(--orange); color: var(--on-accent); }
-.countdown { color: #fff; }
+.countdown { color: var(--on-accent); }
 .btn.danger { color: var(--danger); }
 
 .task-editor { list-style: none; padding: 0; margin: 12px 0; }

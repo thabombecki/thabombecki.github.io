@@ -2,8 +2,8 @@
 // - The page itself: network first, so updates arrive straight away; cached copy when offline.
 // - Versioned files, fonts, the confetti library and photos: cache first (they never change).
 // - Progress from the GitHub API: network first, cached copy when offline.
-const CACHE = 'catoween-v1';
-const SHELL = ['./', 'banner.svg?v=2', 'icon.png', 'batman.png', 'harvey.png'];
+const CACHE = 'catoween-v2';
+const SHELL = ['./', 'banner.svg?v=3', 'icon.png', 'batman.png', 'harvey.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
