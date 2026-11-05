@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cat-o-ween</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1b1230">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Cat-o-ween">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Creepster&family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="style.css?v=202611051704">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-title">
+      <p class="kicker">🎃 Batman <span class="amp">&amp;</span> Harvey present</p>
+      <h1>Cat-o-ween</h1>
+    </div>
+    <img class="banner" src="banner.svg?v=2" alt="Batman in a bat mask and Harvey in a witch hat, two tuxedo cats under a full moon with pumpkins and bats" width="680" height="232">
+    <div class="hero-copy">
+      <p class="tagline">One spooky sleepover while the humans party<br>Saturday night &amp; Sunday morning, 7–8 Nov</p>
+      <p id="countdown" class="countdown"></p>
+      <p id="clocks" class="clocks" aria-label="Time and weather in Cape Town"></p>
+      <div class="hero-actions">
+        <span id="mode-badge" class="badge" hidden></span>
+        <span id="sync-badge" class="badge sync" hidden></span>
+        <button id="lock-btn" class="link-btn" hidden>Lock</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="card progress-card">
+      <div class="progress-head">
+        <span class="progress-title">Spooky sleepover progress</span>
+        <span id="progress-text" class="progress-text">Loading…</span>
+      </div>
+      <div class="track">
+        <div id="progress-bar" class="track-fill"></div>
+        <span id="progress-cat" class="track-cat" aria-hidden="true">🦇</span>
+      </div>
+    </section>
+
+    <section class="card calendar">
+      <div class="month">The night shift</div>
+      <div id="grid" class="shifts"></div>
+      <p class="hint">Tap a shift to see its jobs 🕸️</p>
+    </section>
+
+    <section id="album" class="card">
+      <div class="section-head">
+        <h3>📸 Photo album</h3>
+        <span id="album-count" class="album-count"></span>
+      </div>
+      <p id="album-empty" class="muted">Spooky snaps of the boys will appear here.</p>
+      <div id="album-preview" class="album-preview"></div>
+      <button id="show-all" class="btn primary show-all" type="button" hidden>Show all</button>
+    </section>
+
+    <section id="cats-section" class="card" hidden>
+      <h3>🐾 Meet the boys</h3>
+      <div id="cats" class="cat-grid"></div>
+    </section>
+
+    <section id="edit-tasks" class="card" hidden>
+      <h3>✏️ Sitter tools</h3>
+      <h4 class="tools-sub">Edit the jobs</h4>
+      <p class="muted">🌙 PM jobs go on Saturday night, ☀️ AM jobs on Sunday morning.</p>
+      <ul id="task-editor" class="task-editor"></ul>
+      <form id="add-task-form" class="add-task">
+        <select id="new-task-when" aria-label="Morning or evening">
+          <option value="pm">🌙 PM</option>
+          <option value="am">☀️ AM</option>
+        </select>
+        <input id="new-task" type="text" placeholder="e.g. Close the cat flap" maxlength="60" required>
+        <button class="btn primary" type="submit">Add</button>
+      </form>
+    </section>
+
+    <footer class="foot">Made with 🎃 for two very good boys</footer>
+  </main>
+
+  <dialog id="day" class="sheet">
+    <div class="sheet-head">
+      <button id="close-day" class="close" aria-label="Close">×</button>
+      <div id="day-date" class="day-date"></div>
+      <div>
+        <h2 id="day-title"></h2>
+        <p id="day-mood" class="mood"></p>
+      </div>
+    </div>
+
+    <section id="moods" class="moods" hidden>
+      <h3>😺 Mood check</h3>
+      <div id="mood-rows"></div>
+    </section>
+
+    <ul id="tasks" class="tasks"></ul>
+
+    <section id="diary" class="diary">
+      <h3>📝 Note from the sitter</h3>
+      <div id="diary-body"></div>
+    </section>
+
+    <div class="photos-head">
+      <h3>📸 Spooky snaps</h3>
+      <label id="add-photo" class="btn primary" hidden>
+        + Add photo
+        <input id="photo-input" type="file" accept="image/*" multiple hidden>
+      </label>
+    </div>
+    <p id="no-photos" class="muted empty">No photos yet. The boys are waiting for their close-up.</p>
+    <div id="photos" class="photos"></div>
+  </dialog>
+
+  <dialog id="gallery" class="sheet gallery">
+    <div class="sheet-head">
+      <button id="close-gallery" class="close" aria-label="Close">×</button>
+      <div>
+        <h2>📸 All photos</h2>
+        <p id="gallery-count" class="mood"></p>
+      </div>
+    </div>
+    <button id="slideshow" class="btn primary slideshow-btn" type="button" hidden>▶ Slideshow</button>
+    <div id="album-days" class="album"></div>
+  </dialog>
+
+  <dialog id="lightbox" class="lightbox">
+    <div class="lb-stage">
+      <button id="lb-prev" class="lb-nav prev" type="button" aria-label="Previous photo">‹</button>
+      <img id="lightbox-img" alt="">
+      <button id="lb-next" class="lb-nav next" type="button" aria-label="Next photo">›</button>
+    </div>
+    <p id="lb-meta" class="lb-meta"></p>
+    <p id="lb-caption" class="lb-caption" hidden></p>
+    <form id="caption-form" class="caption-form" hidden>
+      <input id="caption-input" type="text" maxlength="120" placeholder="Add a caption…">
+      <button class="btn" type="submit">Save</button>
+    </form>
+    <div class="dialog-actions">
+      <button id="delete-photo" class="btn danger" type="button" hidden>Delete</button>
+      <button id="lb-play" class="btn" type="button">▶ Play</button>
+      <button id="close-lightbox" class="btn" type="button">Close</button>
+    </div>
+  </dialog>
+
+  <dialog id="unlock" class="unlock">
+    <form method="dialog" id="unlock-form">
+      <h3>🔑 Unlock editing</h3>
+      <p class="muted">Paste your GitHub fine-grained token. It's only stored on this device.</p>
+      <input id="token-input" type="password" autocomplete="off" placeholder="github_pat_…" required>
+      <div class="dialog-actions">
+        <button class="btn" value="cancel" formnovalidate>Cancel</button>
+        <button class="btn primary" value="ok">Unlock</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="app.js?v=202611051704"></script>
+</body>
+</html>

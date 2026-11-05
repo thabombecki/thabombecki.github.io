@@ -1,0 +1,45 @@
+{
+  "tasks": [
+    {
+      "id": "wet-food",
+      "label": "Give wet food",
+      "when": "pm"
+    },
+    {
+      "id": "open-up",
+      "label": "Open up for Batman & Harvey",
+      "when": "am"
+    },
+    {
+      "id": "dry-food",
+      "label": "Check the dry food",
+      "when": "am"
+    },
+    {
+      "id": "water",
+      "label": "Fill the water bowls (and fountain if needed)",
+      "when": "am"
+    },
+    {
+      "id": "ants",
+      "label": "Check for ants at the food bowl",
+      "when": "am"
+    }
+  ],
+  "notes": [
+    {
+      "id": "party",
+      "text": "The humans are out at a Halloween party tonight. Keep the boys safe from the ghouls!",
+      "when": "pm",
+      "icon": "🎃"
+    },
+    {
+      "id": "home",
+      "text": "The humans should be home later today, probably a little tired 🧟",
+      "when": "am",
+      "icon": "🏠"
+    }
+  ],
+  "done": {},
+  "photos": {}
+}
