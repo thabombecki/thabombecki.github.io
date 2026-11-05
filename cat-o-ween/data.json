@@ -40,6 +40,42 @@
       "icon": "🏠"
     }
   ],
-  "done": {},
-  "photos": {}
+  "done": {
+    "2026-11-07": [
+      "wet-food"
+    ]
+  },
+  "times": {
+    "2026-11-07": {
+      "wet-food": "2026-11-05T15:12:51.161Z"
+    }
+  },
+  "diary": {},
+  "photos": {},
+  "captions": {},
+  "moods": {},
+  "cats": [
+    {
+      "id": "batman",
+      "name": "Batman",
+      "avatar": "batman.png",
+      "bio": "",
+      "rating": {
+        "label": "Creature of the night",
+        "emoji": "🦇",
+        "value": 5
+      }
+    },
+    {
+      "id": "harvey",
+      "name": "Harvey",
+      "avatar": "harvey.png",
+      "bio": "",
+      "rating": {
+        "label": "Mischief level",
+        "emoji": "🎃",
+        "value": 4
+      }
+    }
+  ]
 }
